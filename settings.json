@@ -1,0 +1,74 @@
+// VSCode config
+{
+  "breadcrumbs.enabled": true,
+
+  "workbench.activityBar.location": "top",
+  "workbench.colorTheme": "GitHub Dark Default",
+  "workbench.iconTheme": "material-icon-theme",
+  "workbench.editor.highlightModifiedTabs": true,
+
+  "editor.smoothScrolling": true,
+  "editor.fontFamily": "JetBrains Mono",
+  "editor.fontSize": 17,
+  "editor.formatOnSave": false,
+  "editor.gotoLocation.multipleDeclarations": "goto",
+  "editor.gotoLocation.multipleImplementations": "goto",
+  "editor.gotoLocation.multipleDefinitions": "goto",
+  "editor.gotoLocation.multipleReferences": "goto",
+  "editor.gotoLocation.multipleTypeDefinitions": "goto",
+  "editor.guides.bracketPairs": "active",
+  "editor.linkedEditing": true,
+  "editor.bracketPairColorization.enabled": true,
+  "editor.tabCompletion": "on",
+  "editor.accessibilitySupport": "off",
+  "window.zoomLevel": 1,
+  "editor.wordWrap": "off",
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "always"
+  },
+  "editor.minimap.enabled": false,
+
+  "terminal.integrated.fontFamily": "Cascadia Mono",
+  "terminal.integrated.cursorBlinking": true,
+
+  "explorer.compactFolders": false,
+  "explorer.sortOrder": "type",
+
+  "files.hotExit": "off",
+  "files.trimFinalNewlines": true,
+  "files.trimTrailingWhitespace": true,
+  "files.autoSave": "afterDelay",
+
+  "diffEditor.ignoreTrimWhitespace": false,
+  "search.useIgnoreFiles": true,
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/dist": true
+  },
+
+  "extensions.ignoreRecommendations": true,
+
+  "[python]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "ms-python.black-formatter"
+  },
+  "[lua]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "JohnnyMorganz.stylua"
+  },
+  "[cpp]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "ms-vscode.cpptools"
+  },
+  "[jsonc]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "vscode_custom_css.imports": [
+    "file:///home/kemal/.vscode/extensions/brandonkirbyson.vscode-animations-2.0.7/dist/updateHandler.js"
+  ]
+}
