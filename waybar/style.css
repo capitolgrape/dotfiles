@@ -39,7 +39,6 @@ window#waybar {
 }
 
 #clock,
-#battery,
 #cpu,
 #memory,
 #disk,
@@ -52,11 +51,6 @@ window#waybar {
 #clock {
     color: @cyn;
     border-bottom: 4px solid @cyn;
-}
-
-#battery {
-    color: @mag;
-    border-bottom: 4px solid @mag;
 }
 
 #disk {
