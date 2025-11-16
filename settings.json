@@ -1,4 +1,4 @@
-// VSCode config
+// VSCode config /home/kemal/.config/Code/User/settings.json
 {
   "breadcrumbs.enabled": true,
 
@@ -28,7 +28,7 @@
   },
   "editor.minimap.enabled": false,
 
-  "terminal.integrated.fontFamily": "Cascadia Mono",
+  "terminal.integrated.fontFamily": "JetBrains Mono NL",
   "terminal.integrated.cursorBlinking": true,
 
   "explorer.compactFolders": false,
@@ -52,10 +52,6 @@
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "ms-python.black-formatter"
   },
-  "[lua]": {
-    "editor.formatOnSave": true,
-    "editor.defaultFormatter": "JohnnyMorganz.stylua"
-  },
   "[cpp]": {
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "ms-vscode.cpptools"
@@ -68,7 +64,16 @@
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "vscode.json-language-features"
   },
-  "vscode_custom_css.imports": [
-    "file:///home/kemal/.vscode/extensions/brandonkirbyson.vscode-animations-2.0.7/dist/updateHandler.js"
-  ]
+  "liveServer.settings.donotShowInfoMsg": true,
+  "chat.instructionsFilesLocations": {
+    ".github/instructions": true,
+    "/tmp/postman-collections-post-response.instructions.md": true,
+    "/tmp/postman-collections-pre-request.instructions.md": true,
+    "/tmp/postman-folder-post-response.instructions.md": true,
+    "/tmp/postman-folder-pre-request.instructions.md": true,
+    "/tmp/postman-http-request-post-response.instructions.md": true,
+    "/tmp/postman-http-request-pre-request.instructions.md": true
+  },
+  "postman.mcp.notifications.postmanMCP": false,
+  "explorer.confirmDelete": false
 }
