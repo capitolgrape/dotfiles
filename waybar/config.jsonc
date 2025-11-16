@@ -1,101 +1,91 @@
 // -*- mode: jsonc -*-
 {
-    "layer": "top",
-    "position": "top",
-    "height": 30,
-    "spacing": 4,
-    "modules-left": [
-        "hyprland/workspaces",
-        "hyprland/window"
-    ],
-    "modules-center": [
-        "sway/window"
-    ],
-    "modules-right": [
-    	"tray",
-    	"bluetooth",
-        "network",
-	"custom/sep",
-        "cpu",
-	//"battery",
-	"custom/sep",
-        "memory",
-	"custom/sep",
-	"disk",
-	"custom/sep",
-        "clock",
-    ],
-    // Modules configuration
-     "hyprland/workspaces": {
-         "disable-scroll": true,
-         "all-outputs": true,
-         "warp-on-scroll": false,
-         "format": "{name}",
-	"persistent-workspaces": {
-		"*": 9
-         }
-    },
-
-    "hyprland/window": {
-	"max-length": 40,
-	"separate-outputs": false
-    },
-    "tray": {
-        // "icon-size": 21,
-        "spacing": 10,
-        // "icons": {
-        //   "blueman": "bluetooth",
-        //   "TelegramDesktop": "$HOME/.local/share/icons/hicolor/16x16/apps/telegram.png"
-        // }
-    },
-    "clock": {
-        // "timezone": "America/New_York",
-        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        "format-alt": "{:%Y-%m-%d}"
-    },
-    "cpu": {
-        "format": "CPU: {usage}%",
-        "tooltip": false
-    },
-    "memory": {
-        "format": "Mem: {used}GiB"
-    },
-    "disk": {
-	"interval": 60,
-	"path": "/",
-	"format": "Disk: {free}"
-    },	
-    "battery": {
-        "states": {
-            "good": 80,
-            "warning": 30,
-            "critical": 15
-        },
-        "format": "Bat: {capacity}% {icon} {time}",
-        "format-alt": "Bat: {capacity}%",
-	"format-time": "{H}:{M}",
-        "format-icons": ["", "", "", "", ""]
-    },
-    "bluetooth": {
-        // "controller": "controller1", // specify the alias of the controller if there are more than 1 on the system
-        // "format": "󰂯 {status}",
-        // format-* handles every state, so default format is not necessary.
-        "format-on": "󰂯",
-        "format-off": "󰂲",
-        "format-disabled": "", // an empty format will hide the module
-        "format-connected": "󰂱 {num_connections}",
-        // "tooltip-format": "{controller_alias}\t{controller_address}",
-        // "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
-        "tooltip-format-connected": "{device_enumerate}",
-        "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}"
-    },
-    "network": {
-        "format-disconnected": "⚠",
-        "format": "Online"
-    },
-    "custom/sep": {
-	"format": "|",
-	"interval": 0,
-	"tooltip": false
+  "layer": "top",
+  "position": "top",
+  "height": 30,
+  "spacing": 4,
+  "modules-left": ["hyprland/workspaces", "hyprland/window"],
+  "modules-center": [""],
+  "modules-right": [
+    "tray",
+    "pulseaudio",
+    "network",
+    "custom/sep",
+    "cpu",
+    "custom/sep",
+    "memory",
+    "custom/sep",
+    "disk",
+    "custom/sep",
+    "clock"
+  ],
+  "hyprland/workspaces": {
+    "disable-scroll": true,
+    "all-outputs": true,
+    "warp-on-scroll": false,
+    "format": "{name}",
+    "persistent-workspaces": {
+      "*": 9
     }
+  },
+
+  "hyprland/window": {
+    "max-length": 40,
+    "separate-outputs": false
+  },
+  "tray": {
+    "spacing": 10
+  },
+  "clock": {
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+    "format-alt": "{:%Y-%m-%d}"
+  },
+  "cpu": {
+    "format": "CPU: {usage}%",
+    "tooltip": false
+  },
+  "memory": {
+    "format": "Mem: {used}GiB"
+  },
+  "disk": {
+    "interval": 60,
+    "path": "/",
+    "format": "Disk: {free}"
+  },
+  "bluetooth": {
+    "format-on": "󰂯",
+    "format-off": "󰂲",
+    "format-disabled": "",
+    "format-connected": "󰂱 {num_connections}",
+
+    "tooltip-format-connected": "{device_enumerate}",
+    "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}"
+  },
+  "network": {
+    "format-disconnected": "⚠",
+    "format": "ᯤ"
+  },
+  "custom/sep": {
+    "format": "|",
+    "interval": 0,
+    "tooltip": false
+  },
+  "pulseaudio": {
+    "format": "{icon} {volume}%",
+    "format-bluetooth": "󰂯 {icon} {volume}%",
+    "format-bluetooth-muted": "󰂯 {icon} 󰝟",
+    "format-muted": "󰝟 Muted",
+    "format-source": " {volume}%",
+    "format-source-muted": " Muted",
+    "format-icons": {
+      "headphone": "󰋋",
+      "hands-free": "󰋎",
+      "headset": "󰋎",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "default": ["", "", ""]
+    },
+    "on-click": "blueman-manager"
+  }
 }
