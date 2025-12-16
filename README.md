@@ -25,8 +25,8 @@ my config files for a modern, wayland-based setup.
             </a>
         </td>
         <td align="center">
-            <h3>search engine 4get</h3>
-            <p><i>4get is a proxy search engine that doesn't suck</i></p>
+            <h3>search engine</h3>
+            <p><i>4get - dorfdsl.de instance</i></p>
             <a href="https://4get.dorfdsl.de" title="4get">
                 <img src="./media/4get.png" width="48" alt="4get" />
             </a>
