@@ -4,6 +4,10 @@ gestures {
     }
 }
 
+environment {
+    ELECTRON_OZONE_PLATFORM_HINT "wayland"
+}
+
 prefer-no-csd
 debug {
     honor-xdg-activation-with-invalid-serial
@@ -87,6 +91,8 @@ spawn-at-startup "waybar"
 spawn-sh-at-startup "swaybg -i ~/.wallpapers/5.png"
 spawn-at-startup "firefox"
 spawn-at-startup "vesktop"
+spawn-at-startup "xwayland-satellite"
+spawn-at-startup "swanc"
 
 overview {
     backdrop-color "#1111"
@@ -97,7 +103,7 @@ hotkey-overlay {
     skip-at-startup
 }
 
-screenshot-path "~/Pictures/Screenshots/%Y-%m-%d %H-%M-%S.png"
+screenshot-path "~/Pictures/screenshots/%Y%m%dT%H%M.png"
 
 animations {
     window-open {
@@ -127,7 +133,7 @@ workspace "1" { }
 workspace "2" { }
 
 window-rule {
-    geometry-corner-radius 10
+    geometry-corner-radius 5
     clip-to-geometry true
 }
 
@@ -143,22 +149,20 @@ window-rule {
     open-maximized true
 }
 
-
-// Open the Firefox picture-in-picture player as floating by default.
 window-rule {
     match app-id=r#"firefox$"# title="^Picture-in-Picture$"
     open-floating true
 }
 
 binds {
-    Mod+Shift+Slash { show-hotkey-overlay; }
 
-    Mod+Return hotkey-overlay-title="Open a Terminal: kitty" { spawn "kitty"; }
-    Mod+Space repeat=false hotkey-overlay-title="Run an Application: vicinae" { spawn "vicinae" "toggle"; }
-    Mod+V repeat=false hotkey-overlay-title="Clipboard: vicinae" { spawn "vicinae" "vicinae://extensions/vicinae/clipboard/history"; }
-    Mod+E hotkey-overlay-title="File manager: nautilus" { spawn "nautilus"; }
-    Mod+R hotkey-overlay-title="Restart waybar" { spawn-sh "pkill waybar; sleep 0.15 & waybar &"; }
-    Super+Shift+L hotkey-overlay-title="Lock the Screen: hyprlock" { spawn "hyprlock"; }
+
+    Mod+Return { spawn "kitty"; }
+    Mod+Space repeat=false { spawn "vicinae" "toggle"; }
+    Mod+V repeat=false { spawn "vicinae" "vicinae://extensions/vicinae/clipboard/history"; }
+    Mod+E { spawn "nautilus"; }
+    Mod+R { spawn-sh "pkill waybar; sleep 0.15 & waybar &"; }
+    Super+Shift+L { spawn "hyprlock"; }
 
     XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+ -l 1.0"; }
     XF86AudioLowerVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-"; }
