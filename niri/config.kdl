@@ -156,7 +156,6 @@ window-rule {
 
 binds {
 
-
     Mod+Return { spawn "kitty"; }
     Mod+Space repeat=false { spawn "vicinae" "toggle"; }
     Mod+V repeat=false { spawn "vicinae" "vicinae://extensions/vicinae/clipboard/history"; }
