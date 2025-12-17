@@ -19,14 +19,22 @@ starship preset pure-preset -o ~/.config/starship.toml
 mkdir -p "$HOME/.config/Code/User"
 cp "$PWD/code/settings.json" "$HOME/.config/Code/User/settings.json"
 
-
 for dir in niri waybar kitty fish hypr; do
     if [ -d "$dir" ]; then
-        cp -r "$PWD/$dir" "$HOME/.config/"
+        target="$HOME/.config/$dir"
+        if [ ! -d "$target" ]; then
+            mkdir -p "$target"
+        fi
+        cp -r "$PWD/$dir/." "$target/"
     fi
 done
 
+mkdir -p "$HOME/.wallpapers"
+cp -r "$PWD/wallpapers/." "$HOME/.wallpapers/"
+
 fc-cache -fv
+
+gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
 
 sudo systemctl enable --now bluetooth.service
 sudo systemctl enable --now ly.service
