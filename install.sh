@@ -4,9 +4,9 @@ set -e
 
 exec > >(tee -i install.log) 2>&1
 
-./scripts/install_paru.sh
+./scripts/aur_helper.sh
 
-#paru -S --needed --noconfirm - < pkgs
+yay -S --needed --noconfirm - < pkgs
 
 if command -v fish &> /dev/null; then
     chsh -s $(which fish)
