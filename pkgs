@@ -53,7 +53,8 @@ gimp
 linux-headers
 xdg-utils
 xdg-user-dirs
-viewnior
+qimgv
+ffmpeg
 xorg-xwayland
 qt5-wayland
 qt6-wayland
