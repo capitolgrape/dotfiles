@@ -92,7 +92,8 @@ spawn-sh-at-startup "swaybg -i ~/.wallpapers/5.png"
 spawn-at-startup "firefox"
 spawn-at-startup "vesktop"
 spawn-at-startup "xwayland-satellite"
-spawn-at-startup "swanc"
+spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &"
+spawn-at-startup "swaync"
 
 overview {
     backdrop-color "#1111"
