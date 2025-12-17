@@ -17,6 +17,7 @@ waybar
 firefox
 helium-browser-bin
 antigravity
+waydroid
 localsend-bin
 mangohud
 mpv
@@ -50,6 +51,7 @@ qbittorrent
 gimp
 linux-headers
 xdg-utils
+xdg-user-dirs
 viewnior
 xorg-xwayland
 qt5-wayland
