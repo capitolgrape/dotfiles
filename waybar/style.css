@@ -23,9 +23,16 @@ window#waybar {
 #cpu,
 #clock,
 #pulseaudio,
-#network,
-#tray,
 #bluetooth,
+#network,
+#tray {
+  margin: 0px 2px 5px 2px;
+  padding: 2px 5px;
+  background: @background;
+  color: @color5;
+  border: 1px solid @color5;
+}
+
 #disk,
 #temperature,
 #memory,
