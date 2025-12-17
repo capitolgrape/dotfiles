@@ -1,4 +1,6 @@
 #!/bin/bash
+set -e
+
 
 exec > >(tee -i install.log) 2>&1
 
@@ -31,6 +33,11 @@ done
 
 mkdir -p "$HOME/.wallpapers"
 cp -r "$PWD/wallpapers/." "$HOME/.wallpapers/"
+
+./scripts/wal-update.sh "$HOME/.wallpapers/1.png"
+
+cp "$PWD/scripts/wal-update.sh" "$HOME/wal-update.sh"
+chmod +x "$HOME/wal-update.sh"
 
 fc-cache -fv
 

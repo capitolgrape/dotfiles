@@ -1,4 +1,6 @@
 #!/bin/bash
+set -e
+
 
 extensions=(
     "github.github-vscode-theme"

@@ -1,6 +1,8 @@
 #!/bin/bash
+set -e
 
-TEMPLATE_SOURCE="$(pwd)/colors-waybar.css"
+
+TEMPLATE_SOURCE="$HOME/.config/waybar/colors-waybar.css"
 TEMPLATE_DIR="$HOME/.config/wal/templates"
 TEMPLATE_DEST="$TEMPLATE_DIR/colors-waybar.css"
 
@@ -19,6 +21,3 @@ else
     echo "Generating colors from image: $1"
     wal -i "$1"
 fi
-
-echo "Done. Colors generated in ~/.cache/wal/colors-waybar.css"
-echo "You may need to reload Waybar: 'pkill waybar && waybar &'"
