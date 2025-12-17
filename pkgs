@@ -42,10 +42,16 @@ scrcpy
 7zip
 ly
 unzip
+adw-gtk-theme
 lsd
 vesktop-bin
+upscayl-bin
 ttf-jetbrains-mono
 ttf-jetbrains-mono-nerd
+spotify-launcher
+noto-fonts
+noto-fonts-cjk
+noto-fonts-emoji
 bluez
 bluez-utils
 qbittorrent
@@ -54,6 +60,7 @@ linux-headers
 xdg-utils
 python-pywal
 xdg-user-dirs
+xdg-user-dirs-gtk
 qimgv
 ffmpeg
 xorg-xwayland
