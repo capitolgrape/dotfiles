@@ -1,0 +1,64 @@
+@import url('/home/kemal/.cache/wal/colors-waybar.css');
+
+* {
+  border: none;
+  border-radius: 0;
+  min-height: 0;
+  font-family: "JetBrainsMono NFM";
+  font-size: 15px;
+  padding: 0;
+}
+
+window#waybar {
+  /* background: @background; */
+  /* border-top: 1px solid @color5; */
+  background: rgba(0, 0, 0, 0);
+}
+
+#disk,
+#user,
+#window,
+#temperature,
+#memory,
+#cpu,
+#clock,
+#pulseaudio,
+#network,
+#tray,
+#bluetooth,
+#disk,
+#temperature,
+#memory,
+#cpu,
+#pulseaudio {
+  margin: 0 2px;
+  padding: 0 4px;
+  border: 0px;
+}
+
+#info {
+  margin: 0px 2px 5px 2px;
+  padding: 2px 0;
+  background: @background;
+  border: 1px solid @color5;
+}
+
+#workspaces {
+  margin: 0px 2px 5px 2px;
+  background: @background;
+  border: 1px solid @color5;
+}
+
+#workspaces button {
+  all: initial;
+  padding: 2px 4px 2px 4px;
+  color: @color5;
+}
+
+#workspaces button.urgent,
+
+#window {
+  background: @color5;
+  color: @background;
+  border: 0px;
+}

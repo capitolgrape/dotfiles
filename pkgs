@@ -52,6 +52,7 @@ qbittorrent
 gimp
 linux-headers
 xdg-utils
+python-pywal
 xdg-user-dirs
 qimgv
 ffmpeg
