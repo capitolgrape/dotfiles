@@ -1,14 +1,10 @@
 #!/bin/bash
 
+exec > >(tee -i install.log) 2>&1
+
 ./scripts/install_paru.sh
 
-sleep 1
-clear
-
 paru -S --needed --noconfirm - < pkgs
-
-sleep 1
-clear
 
 curl -sS https://starship.rs/install.sh | sh
 
