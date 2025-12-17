@@ -12,7 +12,7 @@ if command -v fish &> /dev/null; then
     chsh -s $(which fish)
 fi
 
-#curl -sS https://starship.rs/install.sh | sh
+curl -sS https://starship.rs/install.sh | sh
 
 starship preset pure-preset -o ~/.config/starship.toml
 
