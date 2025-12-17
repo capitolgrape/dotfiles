@@ -6,13 +6,13 @@ exec > >(tee -i install.log) 2>&1
 
 ./scripts/install_paru.sh
 
-paru -S --needed --noconfirm - < pkgs
+#paru -S --needed --noconfirm - < pkgs
 
 if command -v fish &> /dev/null; then
     chsh -s $(which fish)
 fi
 
-curl -sS https://starship.rs/install.sh | sh
+#curl -sS https://starship.rs/install.sh | sh
 
 starship preset pure-preset -o ~/.config/starship.toml
 
