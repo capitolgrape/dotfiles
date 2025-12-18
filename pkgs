@@ -32,7 +32,7 @@ yt-dlp
 syncthing
 scrcpy
 7zip
-ly
+greetd-tuigreet
 unzip
 adw-gtk-theme
 lsd
@@ -43,6 +43,8 @@ noto-fonts
 noto-fonts-cjk
 noto-fonts-emoji
 bluez
+blueman
+nano
 bluez-utils
 qbittorrent
 gimp
