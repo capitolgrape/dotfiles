@@ -136,18 +136,17 @@ workspace "2" { }
 window-rule {
     geometry-corner-radius 5
     clip-to-geometry true
+    open-maximized true
 }
 
 window-rule {
     match title="Firefox"
     open-on-workspace "1"
-    open-maximized true
 }
 
 window-rule {
     match title="Vesktop"
     open-on-workspace "2"
-    open-maximized true
 }
 
 window-rule {
