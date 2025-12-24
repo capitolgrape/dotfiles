@@ -89,7 +89,7 @@ layout {
 spawn-sh-at-startup "vicinae server"
 spawn-at-startup "waybar"
 spawn-sh-at-startup "swaybg -i ~/.wallpapers/1.png"
-spawn-at-startup "firefox"
+spawn-at-startup "helium-browser" // firefox
 spawn-at-startup "vesktop"
 spawn-at-startup "xwayland-satellite"
 spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &"
