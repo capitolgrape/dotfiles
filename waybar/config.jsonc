@@ -2,7 +2,7 @@
   "layer": "top",
   "position": "top",
   "spacing": 0,
-  "height": 30,
+  "height": 32,
   "margin-top": 0,
   "margin-right": 5,
   "margin-left": 5,
@@ -60,12 +60,12 @@
   },
   "cpu": {
     "interval": 5,
-    "format": "󰍛 {usage}% {avg_frequency}GHz",
+    "format": "󰍛 {usage}%",
     "on-click": "kitty btm"
   },
   "memory": {
     "interval": 5,
-    "format": "󰘚 {percentage}% {used}GiB",
+    "format": "󰘚 {percentage}%",
     "on-click": "kitty btm"
   },
   "temperature": {
@@ -74,7 +74,7 @@
   },
   "disk": {
     "interval": 600,
-    "format": "󰋊 {used} {percentage_used}%"
+    "format": "󰋊 {percentage_used}%"
   },
   "user": {
     "format": "↑ {work_H}h{work_M} uptime",
