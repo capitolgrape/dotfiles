@@ -61,12 +61,12 @@
   "cpu": {
     "interval": 5,
     "format": "󰍛 {usage}% {avg_frequency}GHz",
-    "on-click": "kitty btop"
+    "on-click": "kitty btm"
   },
   "memory": {
     "interval": 5,
     "format": "󰘚 {percentage}% {used}GiB",
-    "on-click": "kitty btop"
+    "on-click": "kitty btm"
   },
   "temperature": {
     "format": " {temperatureC}C",

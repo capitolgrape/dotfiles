@@ -1,7 +1,6 @@
 #!/bin/bash
 set -e
 
-
 TEMPLATE_SOURCE="$HOME/.config/waybar/colors-waybar.css"
 TEMPLATE_DIR="$HOME/.config/wal/templates"
 TEMPLATE_DEST="$TEMPLATE_DIR/colors-waybar.css"

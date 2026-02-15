@@ -41,7 +41,6 @@ output "DP-2" {
 layout {
     gaps 5
     background-color "#000"
-    // always-center-single-column
     center-focused-column "never"
 
     preset-column-widths {
@@ -89,11 +88,12 @@ layout {
 spawn-sh-at-startup "vicinae server"
 spawn-at-startup "waybar"
 spawn-sh-at-startup "swaybg -i ~/.wallpapers/1.png"
-spawn-at-startup "helium-browser" // firefox
+spawn-at-startup "helium-browser"
 spawn-at-startup "vesktop"
 spawn-at-startup "xwayland-satellite"
-spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &"
+spawn-sh-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &"
 spawn-at-startup "swaync"
+spawn-at-startup "swayidle" "-w" "timeout" "600" "hyprlock"
 
 overview {
     backdrop-color "#1111"
@@ -104,7 +104,7 @@ hotkey-overlay {
     skip-at-startup
 }
 
-screenshot-path "~/Pictures/screenshots/%Y%m%dT%H%M.png"
+screenshot-path "~/Pictures/Screenshots/%Y%m%dT%H%M.png"
 
 animations {
     window-open {
@@ -140,19 +140,23 @@ window-rule {
 }
 
 window-rule {
-    match title="Firefox"
+    match app-id="helium"
     open-on-workspace "1"
 }
 
 window-rule {
-    match title="Vesktop"
+    match app-id="vesktop"
     open-on-workspace "2"
 }
 
+/*
 window-rule {
-    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
-    open-floating true
-}
+    match app-id="steam" title="^notificationtoasts_.*$"
+
+    opacity 0.0
+
+    open-focused false
+}*/
 
 binds {
 
@@ -160,7 +164,7 @@ binds {
     Mod+Space repeat=false { spawn "vicinae" "toggle"; }
     Mod+V repeat=false { spawn "vicinae" "vicinae://extensions/vicinae/clipboard/history"; }
     Mod+E { spawn "nautilus"; }
-    Mod+R { spawn-sh "pkill waybar; sleep 0.15 & waybar &"; }
+    Mod+R { spawn-sh "pkill waybar; sleep 0.15; waybar &"; }
     Super+Shift+L { spawn "hyprlock"; }
 
     XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+ -l 1.0"; }
@@ -275,7 +279,6 @@ binds {
     Mod+Comma  { consume-window-into-column; }
     Mod+Period { expel-window-from-column; }
 
-    //Mod+R { switch-preset-column-width; }
     Mod+Shift+R { switch-preset-window-height; }
     Mod+Ctrl+R { reset-window-height; }
     Mod+F { maximize-column; }
@@ -294,9 +297,8 @@ binds {
     Mod+Shift+Equal { set-window-height "+10%"; }
 
     Mod+Shift+V       { toggle-window-floating; }
-    //Mod+Shift+V { switch-focus-between-floating-and-tiling; }
 
-    Mod+W { toggle-column-tabbed-display; }
+    //Mod+W { toggle-column-tabbed-display; }
 
     Print { screenshot; }
     Ctrl+Print { screenshot-screen; }

@@ -1,4 +1,4 @@
-@import url('/home/kemal/.cache/wal/colors-waybar.css');
+@import url('../../.cache/wal/colors-waybar.css');
 
 * {
   border: none;
@@ -10,8 +10,6 @@
 }
 
 window#waybar {
-  /* background: @background; */
-  /* border-top: 1px solid @color5; */
   background: rgba(0, 0, 0, 0);
 }
 

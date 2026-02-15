@@ -1,7 +1,6 @@
 #!/bin/bash
 set -e
 
-
 exec > >(tee -i install.log) 2>&1
 
 ./scripts/aur_helper.sh
@@ -12,8 +11,6 @@ if command -v fish &> /dev/null; then
     chsh -s $(which fish)
 fi
 
-curl -sS https://starship.rs/install.sh | sh
-
 starship preset pure-preset -o ~/.config/starship.toml
 
 ./scripts/code_ext.sh
@@ -21,7 +18,7 @@ starship preset pure-preset -o ~/.config/starship.toml
 mkdir -p "$HOME/.config/Code/User"
 cp "$PWD/code/settings.json" "$HOME/.config/Code/User/settings.json"
 
-for dir in niri waybar kitty fish hypr; do
+for dir in niri waybar kitty fish hypr mpv; do
     if [ -d "$dir" ]; then
         target="$HOME/.config/$dir"
         if [ ! -d "$target" ]; then
@@ -30,6 +27,10 @@ for dir in niri waybar kitty fish hypr; do
         cp -r "$PWD/$dir/." "$target/"
     fi
 done
+
+if [ -f "$PWD/mimeapps.list" ]; then
+    cp "$PWD/mimeapps.list" "$HOME/.config/mimeapps.list"
+fi
 
 mkdir -p "$HOME/.wallpapers"
 cp -r "$PWD/wallpapers/." "$HOME/.wallpapers/"
@@ -44,4 +45,4 @@ fc-cache -fv
 gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
 
 sudo systemctl enable --now bluetooth.service
-sudo systemctl enable --now ly.service
+sudo systemctl enable --now greetd.service
