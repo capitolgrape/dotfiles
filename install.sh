@@ -11,6 +11,10 @@ if command -v fish &> /dev/null; then
     chsh -s $(which fish)
 fi
 
+if ! command -v bun &> /dev/null; then
+    curl -fsSL https://bun.sh/install | bash
+fi
+
 starship preset pure-preset -o ~/.config/starship.toml
 
 ./scripts/code_ext.sh
@@ -35,7 +39,7 @@ fi
 mkdir -p "$HOME/.wallpapers"
 cp -r "$PWD/wallpapers/." "$HOME/.wallpapers/"
 
-./scripts/wal-update.sh "$HOME/.wallpapers/1.png"
+./scripts/wal-update.sh "$HOME/.wallpapers/mononoke036.jpg"
 
 cp "$PWD/scripts/wal-update.sh" "$HOME/wal-update.sh"
 chmod +x "$HOME/wal-update.sh"
