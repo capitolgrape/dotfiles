@@ -165,7 +165,7 @@ binds {
     Mod+V repeat=false { spawn "vicinae" "vicinae://extensions/vicinae/clipboard/history"; }
     Mod+E { spawn "nautilus"; }
     Mod+R { spawn-sh "pkill waybar; sleep 0.15; waybar &"; }
-    Super+Shift+L { spawn "hyprlock"; }
+    Mod+Shift+L { spawn "hyprlock"; }
 
     XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+ -l 1.0"; }
     XF86AudioLowerVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-"; }
