@@ -87,7 +87,7 @@ layout {
 
 spawn-sh-at-startup "vicinae server"
 spawn-at-startup "waybar"
-spawn-sh-at-startup "swaybg -i ~/.wallpapers/1.png"
+spawn-sh-at-startup "swaybg -i ~/.wallpapers/mononoke036.jpg"
 spawn-at-startup "helium-browser"
 spawn-at-startup "vesktop"
 spawn-at-startup "xwayland-satellite"
