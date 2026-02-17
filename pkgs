@@ -44,8 +44,10 @@ noto-fonts-emoji
 bluez
 blueman
 nano
+arch-audit
 bluez-utils
 qbittorrent
+ufw
 gimp
 linux-headers
 xdg-utils

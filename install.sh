@@ -5,7 +5,7 @@ exec > >(tee -i install.log) 2>&1
 
 ./scripts/aur_helper.sh
 
-yay -S --needed --noconfirm - < pkgs
+paru -S --needed --noconfirm - < pkgs
 
 if command -v fish &> /dev/null; then
     chsh -s $(which fish)
@@ -48,5 +48,11 @@ fc-cache -fv
 
 gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
 
+sudo systemctl enable --now fstrim.timer
+sudo systemctl enable --now paccache.timer
 sudo systemctl enable --now bluetooth.service
 sudo systemctl enable --now greetd.service
+
+sudo systemctl enable --now ufw
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
