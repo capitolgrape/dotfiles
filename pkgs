@@ -55,6 +55,7 @@ python-pywal
 xdg-user-dirs
 xdg-user-dirs-gtk
 ffmpeg
+pacman-contrib
 xorg-xwayland
 qt5-wayland
 qt6-wayland
