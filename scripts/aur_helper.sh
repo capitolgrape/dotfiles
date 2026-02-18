@@ -1,8 +1,8 @@
 #!/bin/bash
 set -e
 
-if command -v yay &> /dev/null || command -v paru &> /dev/null; then
-    echo "An AUR helper (yay/paru) is already installed."
+if command -v paru &> /dev/null; then
+    echo "paru is already installed."
     exit 0
 fi
 
@@ -20,4 +20,4 @@ makepkg -si --noconfirm
 cd "$original_dir"
 rm -rf "$BUILD_DIR"
 
-echo "Paru installation completed successfully."
+echo "paru installation completed successfully."

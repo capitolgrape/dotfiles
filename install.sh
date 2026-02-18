@@ -22,7 +22,7 @@ starship preset pure-preset -o ~/.config/starship.toml
 mkdir -p "$HOME/.config/Code/User"
 cp "$PWD/code/settings.json" "$HOME/.config/Code/User/settings.json"
 
-for dir in niri waybar kitty fish hypr mpv; do
+for dir in niri waybar kitty fish hypr mpv fastfetch; do
     if [ -d "$dir" ]; then
         target="$HOME/.config/$dir"
         if [ ! -d "$target" ]; then
@@ -56,3 +56,4 @@ sudo systemctl enable --now greetd.service
 sudo systemctl enable --now ufw
 sudo ufw default deny incoming
 sudo ufw default allow outgoing
+echo "done."
