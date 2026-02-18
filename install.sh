@@ -15,8 +15,6 @@ if ! command -v bun &> /dev/null; then
     curl -fsSL https://bun.sh/install | bash
 fi
 
-starship preset pure-preset -o ~/.config/starship.toml
-
 ./scripts/code_ext.sh
 
 mkdir -p "$HOME/.config/Code/User"
@@ -56,4 +54,6 @@ sudo systemctl enable --now greetd.service
 sudo systemctl enable --now ufw
 sudo ufw default deny incoming
 sudo ufw default allow outgoing
+
+starship preset pure-preset -o ~/.config/starship.toml
 echo "done."
