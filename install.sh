@@ -51,9 +51,8 @@ sudo systemctl enable --now paccache.timer
 sudo systemctl enable --now bluetooth.service
 sudo systemctl enable --now greetd.service
 
-sudo systemctl enable --now ufw
-sudo ufw default deny incoming
-sudo ufw default allow outgoing
+./scripts/ufw.sh
+./scripts/auto_cpufreq.sh
 
 starship preset pure-preset -o ~/.config/starship.toml
 echo "done."
