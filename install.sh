@@ -55,5 +55,7 @@ sudo systemctl enable --now ananicy-cpp.service
 ./scripts/ufw.sh
 ./scripts/auto_cpufreq.sh
 
-starship preset pure-preset -o ~/.config/starship.toml
+if command -v starship &> /dev/null; then
+    starship preset pure-preset -o ~/.config/starship.toml
+fi
 echo "done."
