@@ -50,6 +50,7 @@ sudo systemctl enable --now fstrim.timer
 sudo systemctl enable --now paccache.timer
 sudo systemctl enable --now bluetooth.service
 sudo systemctl enable --now greetd.service
+sudo systemctl enable --now ananicy-cpp.service
 
 ./scripts/ufw.sh
 ./scripts/auto_cpufreq.sh
