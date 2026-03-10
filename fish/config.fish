@@ -1,5 +1,5 @@
 set -gx BUN_INSTALL "$HOME/.bun"
-fish_add_path -g "$BUN_INSTALL/bin"
+set -gx PATH "$BUN_INSTALL/bin" $PATH
 
 if status is-interactive
     set -g fish_greeting
