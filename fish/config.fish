@@ -12,6 +12,7 @@ if status is-interactive
     abbr -a ga "git add"
     abbr -a gc "git commit"
     abbr -a gp "git push"
+    abbr -a ff "clear && fastfetch"
 
     if command -q lsd
         alias ls="lsd"
