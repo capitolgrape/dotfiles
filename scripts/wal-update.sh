@@ -13,7 +13,7 @@ fi
 echo "Linking template to $TEMPLATE_DEST..."
 ln -sf "$TEMPLATE_SOURCE" "$TEMPLATE_DEST"
 
-if [ -z "$1" ]; then
+if [ -z "${1:-}" ]; then
     echo "No image provided. Running wal -R to restore last colors..."
     wal -R
 else
