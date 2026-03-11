@@ -42,7 +42,7 @@ personal linux dotfiles for my `niri` setup. you can use the configs here in you
 - `scripts/wal-update.sh` - runs `pywal`
   - usage: `./wal-update.sh wallpaper.png`
 - `scripts/ufw.sh` - sets up the firewall
-- `scripts/auto_cpufreq.sh` - sets up cpu power tuning. taken from [linutil](https://github.com/ChrisTitusTech/linutil)
+- `scripts/auto_cpufreq.sh` - enables and applies `auto-cpufreq` if it is installed. taken from [linutil](https://github.com/ChrisTitusTech/linutil)
 
 ## install script warning
 

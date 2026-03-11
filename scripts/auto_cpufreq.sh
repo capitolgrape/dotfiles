@@ -13,6 +13,8 @@ if command -v powerprofilesctl >/dev/null 2>&1; then
     sudo systemctl disable --now power-profiles-daemon
 fi
 
+sudo auto-cpufreq --install
+
 if ls /sys/class/power_supply/BAT* >/dev/null 2>&1; then
     sudo auto-cpufreq --force powersave
 else
