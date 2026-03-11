@@ -15,12 +15,12 @@ if ! command -v bun &> /dev/null; then
     curl -fsSL https://bun.sh/install | bash
 fi
 
-./scripts/code_ext.sh
+#./scripts/code_ext.sh
 
-mkdir -p "$HOME/.config/Code/User"
-cp "$PWD/code/settings.json" "$HOME/.config/Code/User/settings.json"
+#mkdir -p "$HOME/.config/Code/User"
+#cp "$PWD/code/settings.json" "$HOME/.config/Code/User/settings.json"
 
-for dir in niri waybar kitty fish hypr mpv fastfetch; do
+for dir in niri waybar kitty fish hypr mpv fastfetch zed; do
     if [ -d "$dir" ]; then
         target="$HOME/.config/$dir"
         if [ ! -d "$target" ]; then

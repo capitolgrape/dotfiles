@@ -1,6 +1,6 @@
 #!/bin/bash
+# not using rn
 set -e
-
 
 extensions=(
     "github.github-vscode-theme"
