@@ -10,7 +10,7 @@ if ! command -v auto-cpufreq >/dev/null 2>&1; then
 fi
 
 if command -v powerprofilesctl >/dev/null 2>&1; then
-    sudo systemctl disable --now power-profiles-daemon
+    sudo systemctl disable --now power-profiles-daemon.service
 fi
 
 sudo auto-cpufreq --install

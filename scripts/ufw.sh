@@ -7,7 +7,6 @@ if ! command -v ufw >/dev/null 2>&1; then
     exit 1
 fi
 
-sudo ufw limit 22/tcp
 sudo ufw default deny incoming
 sudo ufw default allow outgoing
 sudo ufw --force enable
