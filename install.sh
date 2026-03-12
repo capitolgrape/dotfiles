@@ -44,10 +44,10 @@ sudo systemctl enable --now bluetooth.service
 sudo systemctl enable --now greetd.service
 sudo systemctl enable --now ananicy-cpp.service
 
-./scripts/ufw.sh
-./scripts/auto_cpufreq.sh
-
 if command -v starship &> /dev/null; then
     starship preset pure-preset -o ~/.config/starship.toml
 fi
+
+./scripts/ufw.sh
+./scripts/auto_cpufreq.sh
 echo "done."
