@@ -6,6 +6,8 @@ xdg-desktop-portal-gnome
 xdg-desktop-portal-gtk
 swaync
 swaybg
+nodejs
+npm
 hyprlock
 swayidle
 kitty
@@ -43,7 +45,7 @@ noto-fonts-cjk
 noto-fonts-emoji
 bluez
 blueman
-nano
+neovim
 ananicy-cpp
 bluez-utils
 qbittorrent
@@ -64,6 +66,7 @@ zed
 lutris
 imv
 calibre
+signal-desktop
 auto-cpufreq
 cachyos-ananicy-rules-git
 helium-browser-bin
