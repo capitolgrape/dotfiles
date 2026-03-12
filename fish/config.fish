@@ -20,6 +20,5 @@ if status is-interactive
         alias ls="ls --color=auto"
     end
 
-    alias wal-update="$HOME/wal-update.sh"
     alias udb="sudo rm -rf /var/lib/pacman/db.lck"
 end

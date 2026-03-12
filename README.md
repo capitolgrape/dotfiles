@@ -39,8 +39,6 @@ personal linux dotfiles for my `niri` setup. you can use the configs here in you
 ### scripts
 
 - `scripts/aur_helper.sh` - installs `paru` if it is not installed
-- `scripts/wal-update.sh` - runs `pywal`
-  - usage: `./wal-update.sh wallpaper.png`
 - `scripts/ufw.sh` - sets up the firewall
 - `scripts/auto_cpufreq.sh` - enables and applies `auto-cpufreq` if it is installed. taken from [linutil](https://github.com/ChrisTitusTech/linutil)
 
@@ -68,8 +66,8 @@ right now, `install.sh` does this:
     - `fastfetch`
     - `zed`
 4. copies `mimeapps.list` into `~/.config`
-5. copies wallpapers into `~/.wallpapers`, generates wallpaper-based colors, and adds `~/wal-update.sh`
-6. rebuilds the font cache and sets the gnome color scheme preference to dark
+5. sets up wallpapers
+6. refreshes fonts and enables dark mode
 7. enables and starts these services and timers:
     - `fstrim.timer`
     - `paccache.timer`

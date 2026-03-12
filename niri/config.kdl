@@ -86,11 +86,11 @@ layout {
 
 spawn-sh-at-startup "vicinae server"
 spawn-at-startup "waybar"
-spawn-sh-at-startup "swaybg -i ~/.wallpapers/mononoke036.jpg"
 spawn-at-startup "helium-browser"
 spawn-at-startup "vesktop"
 spawn-at-startup "xwayland-satellite"
 spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
+spawn-sh-at-startup "$HOME/.config/swww/wall-restore.sh"
 spawn-at-startup "swaync"
 spawn-at-startup "swayidle" "-w" "timeout" "600" "hyprlock"
 
@@ -155,6 +155,7 @@ binds {
     Mod+V repeat=false { spawn "vicinae" "vicinae://extensions/vicinae/clipboard/history"; }
     Mod+E { spawn "nautilus"; }
     Mod+R { spawn-sh "pkill waybar; sleep 0.15; waybar &"; }
+    Mod+Shift+W { spawn-sh "$HOME/.config/swww/wall-select.sh"; }
     Mod+Shift+L { spawn "hyprlock"; }
 
     XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+ -l 1.0"; }
