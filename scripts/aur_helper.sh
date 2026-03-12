@@ -2,7 +2,7 @@
 set -e
 
 if command -v paru &> /dev/null; then
-    echo "paru is already installed."
+    echo "[INFO] [aur_helper] paru is already installed; skipping installation."
     exit 0
 fi
 
@@ -27,4 +27,4 @@ makepkg -si --noconfirm
 trap - EXIT
 cleanup
 
-echo "paru installation completed successfully."
+echo "[INFO] [aur_helper] paru installation complete."

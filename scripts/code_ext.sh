@@ -17,7 +17,7 @@ extensions=(
     "ms-python.python"
 )
 
-echo "Installing extensions..."
+echo "[INFO] [code_ext] Installing VS Code extensions..."
 
 install_extension() {
     local ext=$1
@@ -28,15 +28,15 @@ install_extension() {
         exit_code=$?
         count=$((count + 1))
         if [ $count -lt $retries ]; then
-            echo "Failed to install $ext. Retrying ($count/$retries)..."
+            echo "[WARN] [code_ext] Failed to install $ext; retrying (attempt $((count + 1)) of $retries)..."
             sleep 2
         else
-            echo "Failed to install $ext after $retries attempts."
+            echo "[ERROR] [code_ext] Failed to install $ext after $retries attempts."
             return $exit_code
         fi
     done
 }
 
 for ext in "${extensions[@]}"; do
-    install_extension "$ext" || echo "Warning: Could not install $ext"
+    install_extension "$ext" || echo "[WARN] [code_ext] Continuing after failed install: $ext."
 done

@@ -50,4 +50,4 @@ fi
 
 ./scripts/ufw.sh
 ./scripts/auto_cpufreq.sh
-echo "done."
+echo "[INFO] [install] Dotfiles setup complete."
