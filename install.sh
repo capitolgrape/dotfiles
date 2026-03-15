@@ -29,10 +29,10 @@ if [ -f "$PWD/mimeapps.list" ]; then
     cp "$PWD/mimeapps.list" "$HOME/.config/mimeapps.list"
 fi
 
-mkdir -p "$HOME/.wallpapers"
-cp -r "$PWD/wallpapers/." "$HOME/.wallpapers/"
+mkdir -p "$HOME/Pictures/Wallpapers"
+cp -r "$PWD/wallpapers/." "$HOME/Pictures/Wallpapers/"
 
-"$HOME/.config/swww/wall-apply.sh" "$HOME/.wallpapers/mononoke036.jpg"
+"$HOME/.config/swww/wall-apply.sh" "$HOME/Pictures/Wallpapers/wallpaper02.png"
 
 fc-cache -fv
 

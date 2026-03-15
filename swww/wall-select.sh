@@ -2,7 +2,7 @@
 set -euo pipefail
 
 CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/swww"
-dir="$HOME/.wallpapers"
+dir="$HOME/Pictures/Wallpapers"
 
 img="$(
   find "$dir" -type f \( \
