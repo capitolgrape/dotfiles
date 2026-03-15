@@ -38,16 +38,27 @@ fc-cache -fv
 
 gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
 
-sudo systemctl enable --now fstrim.timer
-sudo systemctl enable --now paccache.timer
-sudo systemctl enable --now bluetooth.service
-sudo systemctl enable --now greetd.service
-sudo systemctl enable --now ananicy-cpp.service
-
 if command -v starship &> /dev/null; then
     starship preset pure-preset -o ~/.config/starship.toml
 fi
 
 ./scripts/ufw.sh
 ./scripts/auto_cpufreq.sh
+
+sudo systemctl enable --now fstrim.timer
+sudo systemctl enable --now paccache.timer
+sudo systemctl enable --now bluetooth.service
+sudo systemctl enable --now ananicy-cpp.service
+if command -v tuigreet &> /dev/null; then
+    sudo tee /etc/greetd/config.toml > /dev/null << 'EOF'
+[terminal]
+vt = 1
+
+[default_session]
+command = "tuigreet --cmd niri-session --remember"
+user = "greeter"
+EOF
+fi
+
+sudo systemctl enable --now greetd.service
 echo "[INFO] [install] Dotfiles setup complete."

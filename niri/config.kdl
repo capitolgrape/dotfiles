@@ -22,9 +22,6 @@ input {
         numlock
     }
 
-    touchpad {
-    }
-
     mouse {
     }
 
@@ -136,6 +133,11 @@ window-rule {
     geometry-corner-radius 5
     clip-to-geometry true
     open-maximized true
+}
+
+window-rule {
+    match is-active=false
+    opacity 0.95
 }
 
 window-rule {

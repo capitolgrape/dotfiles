@@ -1,6 +1,6 @@
 # dotfiles
 
-personal linux dotfiles for my `niri` setup. you can use the configs here in your own setup.
+personal linux dotfiles for my `niri` setup.
 
 ## preview
 
@@ -17,64 +17,27 @@ personal linux dotfiles for my `niri` setup. you can use the configs here in you
 
 ## what's included
 
-### core desktop
+- `niri/` - compositor config
+- `waybar/` - status bar
+- `hypr/` - hyprlock config
+- `swww/` - wallpaper management
+- `kitty/` - terminal
+- `fish/` - shell config
+- `mpv/` - player config with uosc
+- `zed/` - editor settings
+- `scripts/` - setup helpers (paru, ufw, auto-cpufreq)
+- `mimeapps.list` - default apps
 
-- `niri/` - main compositor config
-- `waybar/` - bar config and style
-- `hypr/` - used for `hyprlock`
-- `mimeapps.list` - default app associations
-- `wallpapers/` - wallpapers copied during setup
+## install
 
-### terminal and shell
+**Warning:** This script is highly opinionated and not recommended for existing systems. It assumes Arch with `paru`, changes your default shell to fish, overwrites configs in `~/.config`, enables system services, and configures greetd for niri-session.
 
-- `kitty/` - terminal config
-- `fish/` - shell config and abbreviations
-- `fastfetch/` - system info output
-
-### media and apps
-
-- `mpv/` - player config, scripts, profiles, and fonts. grabbed it from somewhere and changed it a bit
-- `zed/` - `zed` settings
-
-### scripts
-
-- `scripts/aur_helper.sh` - installs `paru` if it is not installed
-- `scripts/ufw.sh` - sets up the firewall
-- `scripts/auto_cpufreq.sh` - enables and applies `auto-cpufreq` if it is installed. taken from [linutil](https://github.com/ChrisTitusTech/linutil)
-
-## install script warning
-
-do not treat `install.sh` as a safe universal installer.
-
-it is highly opinionated and is **not recommended for use on an existing system**. it installs packages, copies configs directly into `~/.config`, changes the default shell, applies mime associations, enables system services, runs firewall and cpu tuning scripts, and assumes an arch-based system with `paru`.
-
-if you want to reuse this repo, it is safer to copy the parts you need manually instead of running `install.sh` as-is.
-
-## what `install.sh` does
-
-right now, `install.sh` does this:
-
-1. installs `paru` and the packages listed in `pkgs`
-2. changes the default shell to `fish` and installs `bun` if needed
-3. copies these config directories into `~/.config`:
-    - `niri`
-    - `waybar`
-    - `kitty`
-    - `fish`
-    - `hypr`
-    - `mpv`
-    - `fastfetch`
-    - `zed`
-4. copies `mimeapps.list` into `~/.config`
-5. sets up wallpapers
-6. refreshes fonts and enables dark mode
-7. enables and starts these services and timers:
-    - `fstrim.timer`
-    - `paccache.timer`
-    - `bluetooth.service`
-    - `greetd.service`
-    - `ananicy-cpp.service`
-8. applies the firewall setup, cpu power tuning setup, and the `starship` pure preset if `starship` is installed
+`install.sh`:
+1. Installs paru and packages from `pkgs`
+2. Sets fish as shell, installs bun
+3. Copies configs to `~/.config`
+4. Enables services (fstrim, paccache, bluetooth, greetd, ananicy-cpp)
+5. Configures greetd, applies firewall and cpu tuning
 
 ## known issues
 
