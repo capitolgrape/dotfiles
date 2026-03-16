@@ -15,7 +15,7 @@ if ! command -v bun &> /dev/null; then
     curl -fsSL https://bun.sh/install | bash
 fi
 
-for dir in niri waybar kitty fish hypr mpv fastfetch zed swww; do
+for dir in niri waybar kitty fish hypr mpv fastfetch zed swww systemd; do
     if [ -d "$dir" ]; then
         target="$HOME/.config/$dir"
         if [ ! -d "$target" ]; then
@@ -45,21 +45,6 @@ fi
 ./scripts/ufw.sh
 ./scripts/fisher.sh
 ./scripts/auto_cpufreq.sh
+./scripts/services.sh
 
-sudo systemctl enable --now fstrim.timer
-sudo systemctl enable --now paccache.timer
-sudo systemctl enable --now bluetooth.service
-sudo systemctl enable --now ananicy-cpp.service
-if command -v tuigreet &> /dev/null; then
-    sudo tee /etc/greetd/config.toml > /dev/null << 'EOF'
-[terminal]
-vt = 1
-
-[default_session]
-command = "tuigreet --cmd niri-session --remember"
-user = "greeter"
-EOF
-fi
-
-sudo systemctl enable --now greetd.service
 echo "[INFO] [install] Dotfiles setup complete."

@@ -5,7 +5,6 @@ gestures {
 }
 
 environment {
-    DISPLAY ":0"
     ELECTRON_OZONE_PLATFORM_HINT "wayland"
 }
 
@@ -13,6 +12,12 @@ prefer-no-csd
 debug {
     honor-xdg-activation-with-invalid-serial
 }
+
+cursor {
+    hide-when-typing
+    hide-after-inactive-ms 3000
+}
+
 input {
     keyboard {
         repeat-rate 35
@@ -23,11 +28,6 @@ input {
         numlock
     }
 
-    mouse {
-    }
-
-    trackpoint {
-    }
     focus-follows-mouse max-scroll-amount="0%"
 }
 
@@ -38,7 +38,7 @@ output "DP-2" {
 
 layout {
     gaps 5
-    background-color "#000"
+    background-color "#000000"
     center-focused-column "never"
 
     preset-column-widths {
@@ -83,19 +83,19 @@ layout {
 }
 
 spawn-sh-at-startup "vicinae server"
-spawn-at-startup "waybar"
 spawn-at-startup "helium-browser"
 spawn-at-startup "vesktop"
-spawn-at-startup "xwayland-satellite"
 spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
 spawn-sh-at-startup "$HOME/.config/swww/wall-restore.sh"
-spawn-at-startup "swaync"
-spawn-at-startup "swayidle" "-w" "timeout" "600" "hyprlock"
 
 overview {
-    backdrop-color "#1111"
+    backdrop-color "#111111AA"
     zoom 0.5
+    workspace-shadow {
+        on
+    }
 }
+
 
 hotkey-overlay {
     skip-at-startup
@@ -108,7 +108,7 @@ animations {
         spring damping-ratio=1.0 stiffness=700 epsilon=0.0001
     }
     window-close {
-        spring damping-ratio=1.0 stiffness=700 epsilon=0.1
+        spring damping-ratio=1.0 stiffness=700 epsilon=0.001
     }
     window-resize {
         spring damping-ratio=1.0 stiffness=800 epsilon=0.001
@@ -124,6 +124,9 @@ animations {
     }
     horizontal-view-movement {
         spring damping-ratio=1.0 stiffness=700 epsilon=0.0001
+    }
+    config-notification-open-close {
+        spring damping-ratio=1.0 stiffness=800 epsilon=0.0001
     }
 }
 
@@ -159,7 +162,7 @@ binds {
     Mod+E { spawn "nautilus"; }
     Mod+R { spawn-sh "pkill waybar; sleep 0.15; waybar &"; }
     Mod+Shift+W { spawn-sh "$HOME/.config/swww/wall-select.sh"; }
-    Mod+Shift+L { spawn "hyprlock"; }
+    Mod+Shift+L allow-when-locked=true { spawn "hyprlock"; }
 
     XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+ -l 1.0"; }
     XF86AudioLowerVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-"; }
