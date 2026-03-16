@@ -12,6 +12,8 @@ hyprlock
 swayidle
 kitty
 bottom
+fzf
+jq
 polkit-gnome
 nwg-look
 pavucontrol
