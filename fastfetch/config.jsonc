@@ -73,6 +73,6 @@
       "type": "display",
       "key": "display",
       "format": "{width}x{height} @ {refresh-rate} Hz"
-    },
-  ],
+    }
+  ]
 }
