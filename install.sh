@@ -7,7 +7,7 @@ exec > >(tee -i install.log) 2>&1
 
 paru -S --needed --noconfirm - < pkgs
 
-if command -v fish &> /dev/null; then
+if command -v fish &> /dev/null && [ "$SHELL" != "$(command -v fish)" ]; then
     chsh -s "$(command -v fish)"
 fi
 
@@ -43,6 +43,7 @@ if command -v starship &> /dev/null; then
 fi
 
 ./scripts/ufw.sh
+./scripts/fisher.sh
 ./scripts/auto_cpufreq.sh
 
 sudo systemctl enable --now fstrim.timer
