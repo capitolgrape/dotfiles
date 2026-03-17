@@ -15,7 +15,7 @@ if ! command -v bun &> /dev/null; then
     curl -fsSL https://bun.sh/install | bash
 fi
 
-for dir in niri waybar kitty fish hypr mpv fastfetch zed swww systemd; do
+for dir in niri waybar kitty fish hypr mpv fastfetch zed awww systemd; do
     if [ -d "$dir" ]; then
         target="$HOME/.config/$dir"
         if [ ! -d "$target" ]; then
@@ -32,7 +32,7 @@ fi
 mkdir -p "$HOME/Pictures/Wallpapers"
 cp -r "$PWD/wallpapers/." "$HOME/Pictures/Wallpapers/"
 
-"$HOME/.config/swww/wall-apply.sh" "$HOME/Pictures/Wallpapers/wallpaper02.png"
+"$HOME/.config/awww/wall-apply.sh" "$HOME/Pictures/Wallpapers/wallpaper02.png"
 
 fc-cache -fv
 

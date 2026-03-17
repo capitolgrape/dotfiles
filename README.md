@@ -27,7 +27,7 @@ cd ~/dotfiles
 | editor | zed | [zed.dev](https://zed.dev/) |
 | launcher | vicinae | [github.com/vicinaehq/vicinae](https://github.com/vicinaehq/vicinae) |
 | lock | hyprlock | [github.com/hyprwm/hyprlock](https://github.com/hyprwm/hyprlock) |
-| wallpaper | swww | [github.com/LGFae/swww](https://github.com/LGFae/swww) |
+| wallpaper | awww | [codeberg.org/LGFae/awww](https://codeberg.org/LGFae/awww) |
 | notifications | swaync | [github.com/ErikReider/SwayNotificationCenter](https://github.com/ErikReider/SwayNotificationCenter) |
 
 ## keybinds
@@ -65,7 +65,7 @@ cd ~/dotfiles
 ├── mpv/                # media player
 ├── niri/               # window manager
 ├── scripts/            # install helpers
-├── swww/               # wallpaper scripts
+├── awww/               # wallpaper scripts
 ├── systemd/user/       # user services
 ├── wallpapers/         # background images
 ├── waybar/             # status bar

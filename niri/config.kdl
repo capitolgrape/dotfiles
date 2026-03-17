@@ -86,7 +86,7 @@ spawn-sh-at-startup "vicinae server"
 spawn-at-startup "helium-browser"
 spawn-at-startup "vesktop"
 spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
-spawn-sh-at-startup "$HOME/.config/swww/wall-restore.sh"
+spawn-sh-at-startup "$HOME/.config/awww/wall-restore.sh"
 
 overview {
     backdrop-color "#111111AA"
@@ -161,7 +161,7 @@ binds {
     Mod+V repeat=false { spawn "vicinae" "vicinae://extensions/vicinae/clipboard/history"; }
     Mod+E { spawn "nautilus"; }
     Mod+R { spawn-sh "pkill waybar; sleep 0.15; waybar &"; }
-    Mod+Shift+W { spawn-sh "$HOME/.config/swww/wall-select.sh"; }
+    Mod+Shift+W { spawn-sh "$HOME/.config/awww/wall-select.sh"; }
     Mod+Shift+L allow-when-locked=true { spawn "hyprlock"; }
 
     XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+ -l 1.0"; }
