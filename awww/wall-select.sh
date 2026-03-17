@@ -8,6 +8,7 @@ img="$(
   find "$dir" -type f \( \
     -iname '*.jpg' -o \
     -iname '*.jpeg' -o \
+    -iname '*.gif' -o \
     -iname '*.png' -o \
     -iname '*.webp' \
   \) | sort | vicinae dmenu -p 'Pick wallpaper...'
