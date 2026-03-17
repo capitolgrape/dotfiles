@@ -11,7 +11,7 @@ highly **opinionated**. modifies system settings, changes default shell, enables
 ## quick start
 
 ```bash
-git clone https://github.com/username/dotfiles.git ~/dotfiles
+git clone https://github.com/dumbovita/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 ./install.sh
 ```
