@@ -7,9 +7,9 @@ exec > >(tee -i install.log) 2>&1
 
 paru -S --needed --noconfirm - < pkgs
 
-if [ -f "$PWD/makepkg.conf" ] && [ -f "/etc/makepkg.conf" ]; then
-    sudo cp /etc/makepkg.conf "/etc/makepkg.conf.backup.$(date +%Y%m%d_%H%M%S)"
-    sudo cp "$PWD/makepkg.conf" /etc/makepkg.conf
+if [ -f "$PWD/makepkg.conf" ]; then
+    mkdir -p "$HOME/.config/pacman"
+    cp "$PWD/makepkg.conf" "$HOME/.config/pacman/makepkg.conf"
 fi
 
 if command -v fish &> /dev/null && [ "$SHELL" != "$(command -v fish)" ]; then
