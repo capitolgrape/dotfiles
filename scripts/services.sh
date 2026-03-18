@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -euo pipefail
 
 sudo systemctl enable --now fstrim.timer
 sudo systemctl enable --now paccache.timer

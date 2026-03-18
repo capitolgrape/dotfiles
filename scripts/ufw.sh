@@ -1,6 +1,5 @@
 #!/bin/bash
-
-set -e
+set -euo pipefail
 
 if ! command -v ufw >/dev/null 2>&1; then
     echo "[ERROR] [ufw] ufw is not installed; firewall setup aborted."

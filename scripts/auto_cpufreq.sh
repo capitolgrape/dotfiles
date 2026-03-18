@@ -2,7 +2,7 @@
 # https://github.com/AdnanHodzic/auto-cpufreq
 # https://github.com/ChrisTitusTech/linutil
 
-set -eu
+set -euo pipefail
 
 if ! command -v auto-cpufreq >/dev/null 2>&1; then
     echo "[WARN] [auto_cpufreq] auto-cpufreq is not installed; skipping setup."

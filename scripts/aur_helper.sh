@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -Eeuo pipefail
 
 if command -v paru &> /dev/null; then
     echo "[INFO] [aur_helper] paru is already installed; skipping installation."

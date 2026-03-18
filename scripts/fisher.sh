@@ -1,6 +1,5 @@
 #!/bin/bash
-
-set -e
+set -euo pipefail
 
 if ! command -v fish &> /dev/null; then
     echo "[WARN] [fisher] fish shell is not installed; skipping fisher installation."

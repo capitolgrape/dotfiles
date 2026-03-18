@@ -15,9 +15,9 @@ if status is-interactive
     abbr -a ff "clear && fastfetch"
 
     if command -q lsd
-        alias ls="lsd"
+        alias ls="lsd --human-readable --literal --group-directories-first --color=auto"
     else
-        alias ls="ls --color=auto"
+        alias ls="ls --human-readable --literal --group-directories-first --color=auto"
     end
 
     alias udb="sudo rm -rf /var/lib/pacman/db.lck"

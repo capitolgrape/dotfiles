@@ -1,11 +1,16 @@
 #!/bin/bash
-set -e
+set -Eeuo pipefail
 
 exec > >(tee -i install.log) 2>&1
 
 ./scripts/aur_helper.sh
 
 paru -S --needed --noconfirm - < pkgs
+
+if [ -f "$PWD/makepkg.conf" ] && [ -f "/etc/makepkg.conf" ]; then
+    sudo cp /etc/makepkg.conf "/etc/makepkg.conf.backup.$(date +%Y%m%d_%H%M%S)"
+    sudo cp "$PWD/makepkg.conf" /etc/makepkg.conf
+fi
 
 if command -v fish &> /dev/null && [ "$SHELL" != "$(command -v fish)" ]; then
     chsh -s "$(command -v fish)"
@@ -36,7 +41,9 @@ cp -r "$PWD/wallpapers/." "$HOME/Pictures/Wallpapers/"
 
 fc-cache -fv
 
-gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+if command -v gsettings &> /dev/null; then
+    gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+fi
 
 if command -v starship &> /dev/null; then
     starship preset pure-preset -o ~/.config/starship.toml
