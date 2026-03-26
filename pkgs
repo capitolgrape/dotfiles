@@ -10,7 +10,7 @@ npm
 hyprlock
 wine
 swayidle
-kitty
+ghostty
 bottom
 fzf
 jq
@@ -40,6 +40,7 @@ unzip
 adw-gtk-theme
 lsd
 starship
+awww
 ttf-jetbrains-mono
 ttf-jetbrains-mono-nerd
 noto-fonts
@@ -67,7 +68,6 @@ gnome-text-editor
 zed
 lutris
 imv
-calibre
 signal-desktop
 auto-cpufreq
 cachyos-ananicy-rules-git
@@ -79,4 +79,3 @@ vicinae-bin
 vesktop-bin
 upscayl-bin
 anytype-bin
-awww-git

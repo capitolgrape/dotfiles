@@ -1,0 +1,27 @@
+theme = Aizen Dark
+
+font-family = JetBrainsMono Nerd Font
+font-size = 17
+
+background-opacity = 0.85
+background-blur = 5
+
+window-decoration = none
+window-padding-x = 5
+window-padding-y = 5
+
+cursor-style = block
+cursor-style-blink = false
+
+scrollback-limit = 5000
+scrollbar = never
+
+mouse-hide-while-typing = true
+copy-on-select = true
+
+bell-features = audio,no-system
+
+shell-integration = detect
+shell-integration-features = no-cursor
+
+selection-clear-on-typing = true

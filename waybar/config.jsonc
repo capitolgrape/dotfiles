@@ -9,14 +9,7 @@
     "margin-bottom": 0,
     "modules-left": ["niri/workspaces", "niri/window"],
     "modules-center": [],
-    "modules-right": [
-        "group/info",
-        "network",
-        "bluetooth",
-        "tray",
-        "user",
-        "clock",
-    ],
+    "modules-right": ["group/info", "network", "bluetooth", "tray", "user", "clock"],
     "group/info": {
         "orientation": "horizontal",
         "modules": ["cpu", "memory", "disk", "pulseaudio"],
@@ -60,12 +53,12 @@
     "cpu": {
         "interval": 5,
         "format": "󰍛 {usage}%",
-        "on-click": "kitty btm",
+        "on-click": "/usr/bin/ghostty -e btm",
     },
     "memory": {
         "interval": 5,
         "format": "󰘚 {percentage}%",
-        "on-click": "kitty btm",
+        "on-click": "/usr/bin/ghostty -e btm",
     },
     "disk": {
         "interval": 600,

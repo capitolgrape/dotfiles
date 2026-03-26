@@ -20,7 +20,7 @@ if ! command -v bun &> /dev/null; then
     curl -fsSL https://bun.sh/install | bash
 fi
 
-for dir in niri waybar kitty fish hypr mpv fastfetch zed awww systemd; do
+for dir in niri waybar ghostty fish hypr mpv fastfetch zed awww systemd; do
     if [ -d "$dir" ]; then
         target="$HOME/.config/$dir"
         if [ ! -d "$target" ]; then
