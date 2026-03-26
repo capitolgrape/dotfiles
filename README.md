@@ -22,7 +22,7 @@ cd ~/dotfiles
 |-----------|------|------|
 | compositor | niri | [github.com/YaLTeR/niri](https://github.com/YaLTeR/niri) |
 | bar | waybar | [github.com/Alexays/Waybar](https://github.com/Alexays/Waybar) |
-| terminal | kitty | [sw.kovidgoyal.net/kitty](https://sw.kovidgoyal.net/kitty/) |
+| terminal | ghostty | [ghostty.org](https://ghostty.org) |
 | shell | fish + starship | [fishshell.com](https://fishshell.com/) / [starship.rs](https://starship.rs/) |
 | editor | zed | [zed.dev](https://zed.dev/) |
 | launcher | vicinae | [github.com/vicinaehq/vicinae](https://github.com/vicinaehq/vicinae) |
@@ -58,24 +58,16 @@ cd ~/dotfiles
 
 ```
 .
+├── awww/               # wallpaper scripts
 ├── fastfetch/          # system info display
 ├── fish/               # shell config
+├── ghostty/            # terminal config
 ├── hypr/               # lock screen
-├── kitty/              # terminal config
 ├── mpv/                # media player
 ├── niri/               # window manager
 ├── scripts/            # install helpers
-├── awww/               # wallpaper scripts
 ├── systemd/user/       # user services
 ├── wallpapers/         # background images
 ├── waybar/             # status bar
 └── zed/                # editor settings
 ```
-
-<!--
-## screenshots
-
-| desktop | terminal | monitor |
-|---------|----------|---------|
-| ![desktop](preview/desktop.jpg) | ![terminal](preview/terminal.jpg) | ![monitor](preview/monitor.jpg) |
--->
