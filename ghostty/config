@@ -23,6 +23,9 @@ bell-features = audio,no-system
 
 shell-integration = fish
 
+working-directory = ~/
+window-inherit-working-directory = false
+
 selection-clear-on-typing = true
 quit-after-last-window-closed = false
 confirm-close-surface = false

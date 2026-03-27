@@ -158,7 +158,7 @@ binds {
 
     Mod+Return { spawn "ghostty"; }
     Mod+Space repeat=false { spawn "vicinae" "toggle"; }
-    Mod+V repeat=false { spawn "vicinae" "vicinae://extensions/vicinae/clipboard/history"; }
+    Mod+V repeat=false { spawn "vicinae" "vicinae://launch/clipboard/history"; }
     Mod+E { spawn "nautilus"; }
     Mod+R { spawn-sh "pkill waybar; sleep 0.15; waybar &"; }
     Mod+Shift+W { spawn-sh "$HOME/.config/awww/wall-select.sh"; }
