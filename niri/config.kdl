@@ -31,7 +31,7 @@ input {
     focus-follows-mouse max-scroll-amount="0%"
 }
 
-output "DP-2" {
+output "DP-1" {
     mode "1920x1080@60.00"
     position x=1080 y=0
 }
@@ -152,6 +152,12 @@ window-rule {
 window-rule {
     match app-id="vesktop"
     open-on-workspace "2"
+}
+
+window-rule {
+    match app-id="steam" title=r#"^notificationtoasts_\d+_desktop$"#
+    default-floating-position x=10 y=10 relative-to="bottom-right"
+    open-focused false
 }
 
 binds {
