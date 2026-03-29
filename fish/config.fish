@@ -12,6 +12,13 @@ if status is-interactive
     abbr -a ga "git add"
     abbr -a gc "git commit"
     abbr -a gp "git push"
+    abbr -a gs "git status"
+    abbr -a gd "git diff"
+    abbr -a gco "git checkout"
+    abbr -a gl "git log"
+    abbr -a gll "git log --oneline"
+    abbr -a gpull "git pull"
+    abbr -a gf "git fetch"
     abbr -a ff "clear && fastfetch"
     abbr -a udb 'sudo rm -v /var/lib/pacman/db.lck'
 

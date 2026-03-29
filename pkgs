@@ -15,6 +15,7 @@ bottom
 fzf
 jq
 polkit-gnome
+dosfstools
 nwg-look
 pavucontrol
 telegram-desktop

@@ -22,6 +22,10 @@ if ! command -v bun &> /dev/null; then
     curl -fsSL https://bun.sh/install | bash
 fi
 
+if [ ! -d "$HOME/.config/nvim" ]; then
+    git clone https://github.com/nvim-lua/kickstart.nvim ~/.config/nvim
+fi
+
 for dir in niri waybar ghostty fish hypr mpv fastfetch zed awww systemd; do
     if [ -d "$SCRIPT_DIR/$dir" ]; then
         target="$HOME/.config/$dir"
