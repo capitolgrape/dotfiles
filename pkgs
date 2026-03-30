@@ -8,6 +8,7 @@ swaync
 nodejs
 python-nautilus
 sushi
+ffmpegthumbnailer
 npm
 hyprlock
 wine
@@ -57,6 +58,7 @@ bluez-utils
 qbittorrent
 ufw
 gimp
+opencode
 linux-headers
 xdg-utils
 python-pywal

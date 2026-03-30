@@ -26,7 +26,7 @@ if [ ! -d "$HOME/.config/nvim" ]; then
     git clone https://github.com/nvim-lua/kickstart.nvim ~/.config/nvim
 fi
 
-for dir in niri waybar ghostty fish hypr mpv fastfetch zed awww systemd; do
+for dir in niri waybar ghostty fish hypr mpv fastfetch zed awww systemd paru; do
     if [ -d "$SCRIPT_DIR/$dir" ]; then
         target="$HOME/.config/$dir"
         if [ ! -d "$target" ]; then
@@ -47,8 +47,18 @@ cp -r "$SCRIPT_DIR/wallpapers/." "$HOME/Pictures/Wallpapers/"
 
 fc-cache -fv
 
+xdg-user-dirs-update
+
 if command -v gsettings &> /dev/null; then
     gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+    gsettings set org.gnome.nautilus.preferences show-hidden-files true
+    gsettings set org.gnome.nautilus.preferences default-folder-viewer 'icon-view'
+    gsettings set org.gnome.nautilus.list-view default-visible-columns "['name', 'size', 'type', 'date_modified']"
+    gsettings set org.gnome.nautilus.preferences click-policy 'double'
+    gsettings set org.gtk.Settings.FileChooser sort-directories-first true
+    gsettings set org.gnome.nautilus.preferences recursive-search 'always'
+    gsettings set org.gnome.nautilus.preferences thumbnail-limit 100
+    gsettings set org.gtk.Settings.FileChooser startup-mode 'cwd'
 fi
 
 if command -v starship &> /dev/null; then
