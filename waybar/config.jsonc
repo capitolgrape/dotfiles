@@ -61,7 +61,7 @@
         "on-click": "/usr/bin/ghostty -e btm",
     },
     "disk": {
-        "interval": 600,
+        "interval": 900,
         "format": "󰋊 {percentage_used}%",
     },
     "user": {

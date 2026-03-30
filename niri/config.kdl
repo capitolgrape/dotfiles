@@ -86,7 +86,7 @@ spawn-sh-at-startup "vicinae server"
 spawn-at-startup "helium-browser"
 spawn-at-startup "vesktop"
 spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
-spawn-sh-at-startup "$HOME/.config/awww/wall-restore.sh"
+spawn-sh-at-startup "~/.config/awww/wall-restore.sh"
 
 overview {
     backdrop-color "#111111AA"

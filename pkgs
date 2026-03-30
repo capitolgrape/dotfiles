@@ -6,6 +6,8 @@ xdg-desktop-portal-gnome
 xdg-desktop-portal-gtk
 swaync
 nodejs
+python-nautilus
+sushi
 npm
 hyprlock
 wine
@@ -74,6 +76,7 @@ auto-cpufreq
 cachyos-ananicy-rules-git
 helium-browser-bin
 localsend-bin
+nautilus-open-any-terminal
 ngrok
 v4l2loopback-dc-dkms
 vicinae-bin
