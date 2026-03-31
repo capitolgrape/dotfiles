@@ -4,6 +4,9 @@ After=graphical-session.target
 Requisite=graphical-session.target
 
 [Service]
-ExecStart=/usr/bin/swayidle -w timeout 600 'niri msg action power-off-monitors && hyprlock' resume 'systemctl --user restart swayidle' before-sleep 'hyprlock'
+ExecStart=/usr/bin/swayidle -w \
+  timeout 600 'niri msg action power-off-monitors && hyprlock' \
+  resume 'niri msg action power-on-monitors' \
+  before-sleep 'hyprlock'
 Restart=on-failure
 KillMode=process
