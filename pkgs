@@ -6,6 +6,8 @@ xdg-desktop-portal-gnome
 xdg-desktop-portal-gtk
 swaync
 nodejs
+bazaar
+thunderbird
 python-nautilus
 sushi
 ffmpegthumbnailer
@@ -59,6 +61,7 @@ qbittorrent
 ufw
 gimp
 opencode
+newsflash
 linux-headers
 xdg-utils
 python-pywal
@@ -66,6 +69,7 @@ xdg-user-dirs
 xdg-user-dirs-gtk
 ffmpeg
 pacman-contrib
+tldr
 xorg-xwayland
 qt5-wayland
 qt6-wayland
@@ -84,3 +88,4 @@ v4l2loopback-dc-dkms
 vicinae-bin
 vesktop-bin
 upscayl-bin
+jdownloader2

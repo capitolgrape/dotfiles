@@ -58,7 +58,7 @@ if command -v gsettings &> /dev/null; then
     gsettings set org.gtk.Settings.FileChooser sort-directories-first true
     gsettings set org.gnome.nautilus.preferences recursive-search 'always'
     gsettings set org.gnome.nautilus.preferences thumbnail-limit 100
-    gsettings set org.gtk.Settings.FileChooser startup-mode 'cwd'
+    gsettings set org.gtk.Settings.FileChooser startup-mode 'recent'
 fi
 
 if command -v starship &> /dev/null; then

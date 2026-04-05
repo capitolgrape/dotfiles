@@ -63,8 +63,11 @@ cd ~/dotfiles
 ├── fish/               # shell config
 ├── ghostty/            # terminal config
 ├── hypr/               # lock screen
+├── makepkg.conf        # makepkg configuration
+├── mimeapps.list       # default applications
 ├── mpv/                # media player
 ├── niri/               # window manager
+├── paru/               # aur helper config
 ├── scripts/            # install helpers
 ├── systemd/user/       # user services
 ├── wallpapers/         # background images
