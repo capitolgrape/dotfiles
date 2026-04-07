@@ -7,12 +7,12 @@ echo "[INFO] Script directory: $SCRIPT_DIR"
 
 "$SCRIPT_DIR/scripts/aur_helper.sh"
 
-paru -S --needed --noconfirm - < "$SCRIPT_DIR/pkgs"
-
 if [ -f "$SCRIPT_DIR/makepkg.conf" ]; then
     mkdir -p "$HOME/.config/pacman"
     cp "$SCRIPT_DIR/makepkg.conf" "$HOME/.config/pacman/makepkg.conf"
 fi
+
+paru -S --needed --noconfirm - < "$SCRIPT_DIR/pkgs"
 
 if command -v fish &> /dev/null && [ "$SHELL" != "$(command -v fish)" ]; then
     chsh -s "$(command -v fish)"
