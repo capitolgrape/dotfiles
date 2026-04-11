@@ -146,7 +146,7 @@ blur {
 }
 
 window-rule {
-    match is-floating true
+    match is-floating=true
     background-effect {
         xray false
         blur true
