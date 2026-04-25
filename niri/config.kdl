@@ -125,19 +125,16 @@ animations {
     }
 }
 
-// https://github.com/niri-wm/niri/pull/3483
-
 window-rule {
     geometry-corner-radius 7
     clip-to-geometry true
     open-maximized true
-    /*background-effect {
+    background-effect {
         xray true
         blur true
-    }*/
+    }
 }
 
-/*
 blur {
     passes 3
     offset 3.0
@@ -152,7 +149,6 @@ window-rule {
         blur true
     }
 }
-*/
 
 window-rule {
     match is-active=false
