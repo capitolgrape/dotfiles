@@ -7,7 +7,6 @@ xdg-desktop-portal-gtk
 swaync
 nodejs
 bazaar
-thunderbird
 python-nautilus
 sushi
 ffmpegthumbnailer
@@ -89,4 +88,5 @@ v4l2loopback-dc-dkms
 vicinae-bin
 vesktop-bin
 upscayl-bin
+betterbird-bin
 jdownloader2
