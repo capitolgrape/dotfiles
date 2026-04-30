@@ -59,6 +59,7 @@ if command -v gsettings &> /dev/null; then
     gsettings set org.gnome.nautilus.preferences recursive-search 'always'
     gsettings set org.gnome.nautilus.preferences thumbnail-limit 100
     gsettings set org.gtk.Settings.FileChooser startup-mode 'recent'
+    gsettings set org.gnome.desktop.privacy remember-recent-files false
 fi
 
 if command -v starship &> /dev/null; then

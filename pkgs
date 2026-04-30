@@ -7,7 +7,6 @@ xdg-desktop-portal-gtk
 swaync
 nodejs
 bazaar
-python-nautilus
 sushi
 ffmpegthumbnailer
 npm
@@ -34,7 +33,10 @@ github-cli
 flatpak
 obs-studio
 element-desktop
+file-roller
 nautilus
+nautilus-image-converter
+nautilus-python
 fish
 prismlauncher
 v4l2loopback-dkms
