@@ -1,7 +1,3 @@
-------------------
----- MONITORS ----
-------------------
-
 hl.monitor({
     output   = "",
     mode     = "preferred",
@@ -9,44 +5,37 @@ hl.monitor({
     scale    = "auto",
 })
 
+local terminal          = "ghostty"
+local fileManager       = "nautilus"
+local menu              = "vicinae toggle"
+local screenshot         = "$HOME/.config/.scripts/screenshot/screenshot.sh"
 
----------------------
----- PROGRAMS ----
----------------------
-
-local terminal    = "ghostty"
-local fileManager = "nautilus"
-local menu        = "vicinae toggle"
-
--------------------
----- AUTOSTART ----
--------------------
-
-hl.on("hyprland.start", function ()
-   hl.exec_cmd(terminal)
-   hl.exec_cmd("vicinae server")
-   hl.exec_cmd("waybar")
+hl.on("hyprland.start", function()
+    hl.exec_cmd("vicinae server")
+    hl.exec_cmd("waybar")
+    hl.exec_cmd("swaync")
+    hl.exec_cmd("/usr/lib/hyprpolkitagent/hyprpolkitagent")
+    hl.exec_cmd("$HOME/.config/.scripts/wallpaper/wall-restore.sh")
+    hl.exec_cmd("hypridle")
+    hl.exec_cmd("bash -c 'command -v xwaylandvideobridge && xwaylandvideobridge || true'")
 end)
-
-
--------------------------------
----- ENVIRONMENT ----
--------------------------------
 
 hl.env("XCURSOR_SIZE", "24")
 hl.env("HYPRCURSOR_SIZE", "24")
-
-
------------------------
----- LOOK AND FEEL ----
------------------------
+hl.env("XDG_CURRENT_DESKTOP", "Hyprland")
+hl.env("XDG_SESSION_DESKTOP", "Hyprland")
+hl.env("XDG_SESSION_TYPE", "wayland")
+hl.env("QT_QPA_PLATFORM", "wayland;xcb")
+hl.env("GDK_BACKEND", "wayland,x11")
+hl.env("MOZ_ENABLE_WAYLAND", "1")
+hl.env("ELECTRON_OZONE_PLATFORM_HINT", "auto")
 
 hl.config({
     general = {
-        gaps_in          = 5,
-        gaps_out         = 20,
+        gaps_in          = 4,
+        gaps_out         = 14,
 
-        border_size      = 2,
+        border_size      = 1,
 
         col              = {
             active_border   = { colors = { "rgba(33ccffee)", "rgba(00ff99ee)" }, angle = 45 },
@@ -55,13 +44,13 @@ hl.config({
 
         resize_on_border = false,
 
-        allow_tearing    = false,
+        allow_tearing    = true,
 
         layout           = "dwindle",
     },
 
     decoration = {
-        rounding         = 10,
+        rounding         = 8,
         rounding_power   = 2,
 
         active_opacity   = 1.0,
@@ -69,7 +58,7 @@ hl.config({
 
         shadow           = {
             enabled      = true,
-            range        = 4,
+            range        = 3,
             render_power = 3,
             color        = 0xee1a1a1a,
         },
@@ -131,21 +120,12 @@ hl.config({
     },
 })
 
-----------------
-----  MISC  ----
-----------------
-
 hl.config({
     misc = {
         force_default_wallpaper = -1,
         disable_hyprland_logo   = false,
     },
 })
-
-
----------------
----- INPUT ----
----------------
 
 hl.config({
     input = {
@@ -180,20 +160,21 @@ hl.device({
 })
 
 
----------------------
----- KEYBINDINGS ----
----------------------
-
 local mainMod = "SUPER"
+
 
 hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. " + Q", hl.dsp.window.close())
-hl.bind(mainMod .. " + M",
-    hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
+hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("vicinae 'vicinae://launch/clipboard/history?toggle=true'"))
 hl.bind(mainMod .. " + SHIFT + V", hl.dsp.window.float({ action = "toggle" }))
+hl.bind(mainMod .. " + F", hl.dsp.exec_cmd("hyprctl dispatch fullscreen"))
+hl.bind(mainMod .. " + SHIFT + L", hl.dsp.exec_cmd("hyprlock"))
+hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd("$HOME/.config/.scripts/wallpaper/wall-select.sh"))
 hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd(menu))
+hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("pkill -x waybar; nohup waybar &>/dev/null &"))
+hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd("hyprctl reload"))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))
 
@@ -208,8 +189,8 @@ for i = 1, 10 do
     hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
 end
 
-hl.bind(mainMod .. " + S", hl.dsp.workspace.toggle_special("magic"))
-hl.bind(mainMod .. " + SHIFT + S", hl.dsp.window.move({ workspace = "special:magic" }))
+--hl.bind(mainMod .. " + S", hl.dsp.workspace.toggle_special("magic"))
+--hl.bind(mainMod .. " + SHIFT + S", hl.dsp.window.move({ workspace = "special:magic" }))
 
 hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
 hl.bind(mainMod .. " + mouse_up", hl.dsp.focus({ workspace = "e-1" }))
@@ -233,10 +214,8 @@ hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = tr
 hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
 hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true })
 
-
--------------------
----- LAYERS ----
--------------------
+hl.bind("PRINT", hl.dsp.exec_cmd(screenshot .. " full"))
+hl.bind(mainMod .. " + PRINT", hl.dsp.exec_cmd(screenshot .. " area"))
 
 hl.layer_rule({
     name         = "vicinae-blur",
@@ -251,17 +230,63 @@ hl.layer_rule({
     no_anim = true,
 })
 
-
---------------------------------
----- WINDOWS AND WORKSPACES ----
---------------------------------
-
 hl.window_rule({
     name           = "suppress-maximize-events",
     match          = { class = ".*" },
 
     suppress_event = "maximize",
 })
+
+hl.window_rule({
+    name   = "float-modal-dialogs",
+    match  = { modal = true },
+
+    float  = true,
+    center = true,
+})
+
+hl.window_rule({
+    name   = "float-utility-apps",
+    match  = { class = "^(pavucontrol|hyprpolkitagent)$" },
+
+    float  = true,
+    center = true,
+})
+
+hl.window_rule({
+    name   = "float-file-dialogs",
+    match  = { title = "^(Open|Save|Save As|Select a File|Choose.*|File Upload)$" },
+
+    float  = true,
+    center = true,
+})
+
+hl.window_rule({
+    name         = "float-screen-pickers",
+    match        = { class = "^(hyprland-share-picker|hyprscreenpicker)$" },
+
+    float        = true,
+    center       = true,
+    stay_focused = true,
+})
+
+hl.window_rule({
+    name   = "float-screen-picker-titles",
+    match  = { title = "^(Screen ?Picker|Share.*|Choose what to share|Select what to share)$" },
+
+    float        = true,
+    center       = true,
+    stay_focused = true,
+})
+
+hl.window_rule({
+    name  = "pin-picture-in-picture",
+    match = { title = "^(Picture-in-Picture|Picture in picture)$" },
+
+    float = true,
+    pin   = true,
+})
+
 hl.window_rule({
     name     = "fix-xwayland-drags",
     match    = {
@@ -277,9 +302,20 @@ hl.window_rule({
 })
 
 hl.window_rule({
-    name  = "move-hyprland-run",
-    match = { class = "hyprland-run" },
+    name      = "allow-tearing-for-games",
+    match     = { class = "^(steam_app_.*|gamescope|cs2)$" },
 
-    move  = "20 monitor_h-120",
-    float = true,
+    immediate = true,
+})
+
+hl.window_rule({
+    name             = "hide-xwayland-video-bridge",
+    match            = { class = "^xwaylandvideobridge$" },
+
+    no_initial_focus = true,
+    no_focus         = true,
+    no_anim          = true,
+    no_blur          = true,
+    max_size         = "1 1",
+    opacity          = 0.0,
 })
