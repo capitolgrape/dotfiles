@@ -1,5 +1,4 @@
-@define-color background #101010;
-@define-color foreground #eeeeee;
+@import "colors.css";
 
 * {
     border: none;
@@ -17,10 +16,10 @@ window#waybar {
 
 #waybar > box {
     border-radius: 0px;
-    border-bottom: 1.5px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1.5px solid alpha(@primary, 0.45);
     margin: 0px 0px 2px 0px;
-    background-color: @background;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 1);
+    background-color: @surface;
+    box-shadow: 0 1px 2px alpha(@shadow, 1);
     min-height: 28px;
     transition-property: background-color;
     transition-duration: 0.5s;
@@ -44,7 +43,7 @@ window#waybar {
     all: initial;
     padding: 0px 4px;
     margin: 0px 2px;
-    color: @foreground;
+    color: @on_surface;
     border: none;
     opacity: 1;
     font-weight: 900;
@@ -52,8 +51,8 @@ window#waybar {
 }
 
 #workspaces button.active {
-    color: @background;
-    background-color: @foreground;
+    color: @on_primary;
+    background-color: @primary;
     padding: 1px 4px;
     opacity: 1;
 }
@@ -61,24 +60,24 @@ window#waybar {
 #workspaces button.empty:hover,
 #workspaces button:hover {
     background: transparent;
-    color: alpha(@foreground, 1);
+    color: alpha(@on_surface, 1);
     transition: all 150ms ease;
     opacity: 0.75;
 }
 
 #workspaces button.empty {
     opacity: 0.4;
-    color: alpha(@foreground, 0.45);
+    color: alpha(@on_surface, 0.45);
 }
 
 #workspaces button.empty.active {
     opacity: 1;
-    background-color: @foreground;
-    color: @background;
+    background-color: @primary;
+    color: @on_primary;
 }
 
 #window {
-    color: @foreground;
+    color: @on_surface;
     margin: 1px 3px;
     padding: 0 4px;
     opacity: 0.6;
@@ -91,6 +90,7 @@ window#waybar {
 #network,
 #bluetooth,
 #pulseaudio {
+    color: @on_surface_variant;
     min-width: 12px;
     padding: 0 4px;
     margin: 1px 3px 1px 3px;
@@ -118,13 +118,13 @@ window#waybar {
 
 tooltip {
     padding: 4px;
-    background: @background;
+    background: @surface;
     font-size: 10px;
-    border: 1.5px solid alpha(@foreground, 0.6);
+    border: 1.5px solid alpha(@on_surface, 0.6);
     border-radius: 8px;
 }
 tooltip label {
-    color: alpha(@foreground, 0.65);
+    color: alpha(@on_surface, 0.65);
     font-weight: normal;
 }
 
@@ -139,5 +139,5 @@ tooltip label {
     border-radius: 0px;
     opacity: 1;
     background-color: transparent;
-    color: @foreground;
+    color: @primary;
 }

@@ -1,0 +1,31 @@
+theme = "Matugen"
+
+font-family = JetBrainsMono Nerd Font
+font-size = 17
+
+background-opacity = 0.90
+
+window-decoration = none
+window-padding-x = 8
+window-padding-y = 8
+window-padding-balance = true
+
+cursor-style = block
+cursor-style-blink = false
+cursor-text = cell-foreground
+
+scrollback-limit = 50000
+link-previews = false
+scrollbar = system
+
+mouse-hide-while-typing = true
+copy-on-select = true
+
+bell-features = no-audio,no-system
+
+working-directory = ~/
+window-inherit-working-directory = false
+
+selection-clear-on-typing = true
+quit-after-last-window-closed = false
+confirm-close-surface = false

@@ -5,10 +5,20 @@ hl.monitor({
     scale    = "auto",
 })
 
-local terminal          = "ghostty"
-local fileManager       = "nautilus"
-local menu              = "vicinae toggle"
-local screenshot         = "$HOME/.config/.scripts/screenshot/screenshot.sh"
+local config_home = os.getenv("XDG_CONFIG_HOME") or (os.getenv("HOME") .. "/.config")
+local ok, colors = pcall(dofile, config_home .. "/hypr/colors.lua")
+if not ok then
+    colors = {
+        primary         = "rgba(33ccffdd)",
+        secondary       = "rgba(00ff99dd)",
+        surface_variant = "rgba(595959aa)",
+        shadow          = "rgba(1a1a1aee)",
+    }
+end
+
+local terminal   = "ghostty"
+local menu       = "vicinae toggle"
+local screenshot = "$HOME/.config/.scripts/screenshot/screenshot.sh"
 
 hl.on("hyprland.start", function()
     hl.exec_cmd("vicinae server")
@@ -17,7 +27,6 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("/usr/lib/hyprpolkitagent/hyprpolkitagent")
     hl.exec_cmd("$HOME/.config/.scripts/wallpaper/wall-restore.sh")
     hl.exec_cmd("hypridle")
-    hl.exec_cmd("bash -c 'command -v xwaylandvideobridge && xwaylandvideobridge || true'")
 end)
 
 hl.env("XCURSOR_SIZE", "24")
@@ -32,14 +41,14 @@ hl.env("ELECTRON_OZONE_PLATFORM_HINT", "auto")
 
 hl.config({
     general = {
-        gaps_in          = 4,
-        gaps_out         = 14,
+        gaps_in          = 2,
+        gaps_out         = 9,
 
         border_size      = 1,
 
         col              = {
-            active_border   = { colors = { "rgba(33ccffee)", "rgba(00ff99ee)" }, angle = 45 },
-            inactive_border = "rgba(595959aa)",
+            active_border   = { colors = { colors.primary, colors.secondary }, angle = 45 },
+            inactive_border = colors.surface_variant,
         },
 
         resize_on_border = false,
@@ -50,17 +59,17 @@ hl.config({
     },
 
     decoration = {
-        rounding         = 8,
+        rounding         = 6,
         rounding_power   = 2,
 
         active_opacity   = 1.0,
-        inactive_opacity = 1.0,
+        inactive_opacity = 0.95,
 
         shadow           = {
             enabled      = true,
             range        = 3,
             render_power = 3,
-            color        = 0xee1a1a1a,
+            color        = colors.shadow,
         },
 
         blur             = {
@@ -109,21 +118,9 @@ hl.config({
 })
 
 hl.config({
-    master = {
-        new_status = "master",
-    },
-})
-
-hl.config({
-    scrolling = {
-        fullscreen_on_one_column = true,
-    },
-})
-
-hl.config({
     misc = {
         force_default_wallpaper = -1,
-        disable_hyprland_logo   = false,
+        disable_hyprland_logo   = true,
     },
 })
 
@@ -142,9 +139,6 @@ hl.config({
 
         sensitivity  = 0,
 
-        touchpad     = {
-            natural_scroll = false,
-        },
     },
 })
 
@@ -154,19 +148,14 @@ hl.gesture({
     action = "workspace"
 })
 
-hl.device({
-    name        = "epic-mouse-v1",
-    sensitivity = -0.5,
-})
-
-
 local mainMod = "SUPER"
-
 
 hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. " + Q", hl.dsp.window.close())
-hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
-hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
+hl.bind(mainMod .. " + M",
+    hl.dsp.exec_cmd(
+        "wlogout --protocol xdg --buttons-per-row 4 --column-spacing 18 --row-spacing 18 --margin 32 --layout $HOME/.config/wlogout/layout --css $HOME/.config/wlogout/style.css"))
+hl.bind(mainMod .. " + E", hl.dsp.exec_cmd("nautilus"))
 hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("vicinae 'vicinae://launch/clipboard/history?toggle=true'"))
 hl.bind(mainMod .. " + SHIFT + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + F", hl.dsp.exec_cmd("hyprctl dispatch fullscreen"))
@@ -216,6 +205,7 @@ hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true 
 
 hl.bind("PRINT", hl.dsp.exec_cmd(screenshot .. " full"))
 hl.bind(mainMod .. " + PRINT", hl.dsp.exec_cmd(screenshot .. " area"))
+hl.bind(mainMod .. " + SHIFT + PRINT", hl.dsp.exec_cmd(screenshot .. " active"))
 
 hl.layer_rule({
     name         = "vicinae-blur",
@@ -247,10 +237,17 @@ hl.window_rule({
 
 hl.window_rule({
     name   = "float-utility-apps",
-    match  = { class = "^(pavucontrol|hyprpolkitagent)$" },
+    match  = { class = "^(pavucontrol|hyprpolkitagent|wlogout)$" },
 
     float  = true,
     center = true,
+})
+
+hl.window_rule({
+    name  = "size-wlogout",
+    match = { class = "^wlogout$" },
+
+    size  = "720 220",
 })
 
 hl.window_rule({
@@ -271,8 +268,8 @@ hl.window_rule({
 })
 
 hl.window_rule({
-    name   = "float-screen-picker-titles",
-    match  = { title = "^(Screen ?Picker|Share.*|Choose what to share|Select what to share)$" },
+    name         = "float-screen-picker-titles",
+    match        = { title = "^(Screen ?Picker|Share.*|Choose what to share|Select what to share)$" },
 
     float        = true,
     center       = true,

@@ -1,0 +1,62 @@
+@import "colors.css";
+
+* {
+    background-image: none;
+    box-shadow: none;
+}
+
+window {
+    background-color: alpha(@background, 0.9);
+}
+
+button {
+    border-radius: 14px;
+    border-color: alpha(@primary, 0.45);
+    color: @foreground;
+    background-color: alpha(@surface_high, 0.96);
+    border-style: solid;
+    border-width: 2px;
+    background-repeat: no-repeat;
+    background-position: center 34%;
+    background-size: 42px;
+    font-size: 14px;
+    font-weight: 700;
+    padding-top: 72px;
+}
+
+button:focus,
+button:active,
+button:hover {
+    border-color: @primary;
+    color: @on_primary;
+    background-color: @primary;
+    outline-style: none;
+}
+
+#lock {
+    background-image: image(
+        url("/usr/share/wlogout/icons/lock.png"),
+        url("/usr/local/share/wlogout/icons/lock.png")
+    );
+}
+
+#logout {
+    background-image: image(
+        url("/usr/share/wlogout/icons/logout.png"),
+        url("/usr/local/share/wlogout/icons/logout.png")
+    );
+}
+
+#shutdown {
+    background-image: image(
+        url("/usr/share/wlogout/icons/shutdown.png"),
+        url("/usr/local/share/wlogout/icons/shutdown.png")
+    );
+}
+
+#reboot {
+    background-image: image(
+        url("/usr/share/wlogout/icons/reboot.png"),
+        url("/usr/local/share/wlogout/icons/reboot.png")
+    );
+}
