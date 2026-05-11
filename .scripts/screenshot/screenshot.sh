@@ -8,9 +8,8 @@ file="$screenshot_dir/$(date +%Y-%m-%d_%H-%M-%S).png"
 
 mkdir -p "$screenshot_dir"
 
-if command -v swaync-client >/dev/null 2>&1; then
-    swaync-client --skip-wait --close-panel >/dev/null 2>&1 || true
-    swaync-client --skip-wait --hide-all >/dev/null 2>&1 || true
+if command -v makoctl >/dev/null 2>&1; then
+    makoctl dismiss --all --no-history >/dev/null 2>&1 || true
     sleep 0.1
 fi
 

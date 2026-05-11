@@ -20,7 +20,8 @@ awww img "$img" \
   --transition-fps 60
 
 if command -v matugen >/dev/null 2>&1 && [ -f "$MATUGEN_CONFIG" ]; then
-  matugen image -c "$MATUGEN_CONFIG" --prefer saturation "$img" || printf 'matugen: failed to generate colors\n' >&2
+  matugen image -c "$MATUGEN_CONFIG" --prefer saturation "$img" || \
+    printf 'matugen: failed to generate colors\n' >&2
 fi
 
 printf '%s\n' "$img" > "$STATE_DIR/current"
