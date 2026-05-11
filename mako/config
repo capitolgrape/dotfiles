@@ -1,0 +1,19 @@
+anchor=top-right
+group-by=app-name,summary,body
+default-timeout=5000
+width=420
+outer-margin=8
+padding=8,12
+border-size=1
+border-radius=9
+max-icon-size=44
+icon-border-radius=6
+font=Adwaita Sans 14
+format=<b>%s</b>\n%b
+include=~/.config/mako/mako-colors
+
+[summary~="Screenshot copied"]
+max-icon-size=80
+
+[summary~="Screenshot saved"]
+max-icon-size=80

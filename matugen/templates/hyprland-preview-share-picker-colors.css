@@ -9,26 +9,29 @@
 @define-color text {{colors.on_surface.default.hex}};
 
 * {
-  all: unset;
-  font-family: JetBrains Mono NF;
-  color: @foreground;
-  font-weight: bold;
-  font-size: 16px;
+    all: unset;
+    font-family: JetBrains Mono NF;
+    color: @foreground;
+    font-weight: bold;
+    font-size: 16px;
 }
 
 .window {
-  background: alpha(@background, 0.95);
-  border: solid 2px @accent;
-  margin: 4px;
-  padding: 18px;
+    background: alpha(@background, 0.95);
+    border: solid 2px @accent;
+    margin: 4px;
+    padding: 18px;
 }
 
 tabs {
     padding: 0.5rem 1rem;
 }
 
-tabs > tab {
+tabs>tab {
     margin-right: 1rem;
+    border-bottom: 2px solid transparent;
+    padding-bottom: 4px;
+    transition: all 0.2s ease;
 }
 
 .tab-label {
@@ -36,12 +39,21 @@ tabs > tab {
     transition: all 0.2s ease;
 }
 
-tabs > tab:checked > .tab-label, tabs > tab:active > .tab-label {
-    text-decoration: underline currentColor;
+tabs>tab:checked>.tab-label,
+tabs>tab:active>.tab-label {
+    text-decoration: none;
     color: @selected_tab;
 }
 
-tabs > tab:focus > .tab-label {
+tabs>tab:checked,
+tabs>tab:active {
+    border: none;
+    box-shadow: none;
+    background: none;
+    border-bottom: 2px solid @selected_tab;
+}
+
+tabs>tab:focus>.tab-label {
     color: @foreground;
 }
 
@@ -54,7 +66,8 @@ tabs > tab:focus > .tab-label {
     padding: 0.25rem;
 }
 
-flowboxchild > .card, button > .card {
+flowboxchild>.card,
+button>.card {
     transition: all 0.2s ease;
     border: solid 2px transparent;
     border-color: @background;
@@ -63,7 +76,13 @@ flowboxchild > .card, button > .card {
     padding: 5px;
 }
 
-flowboxchild:hover > .card, button:hover > .card, flowboxchild:active > .card, flowboxchild:selected > .card, button:active > .card, button:selected > .card, button:focus > .card {
+flowboxchild:hover>.card,
+button:hover>.card,
+flowboxchild:active>.card,
+flowboxchild:selected>.card,
+button:active>.card,
+button:selected>.card,
+button:focus>.card {
     border: solid 2px @accent;
 }
 
@@ -79,11 +98,12 @@ flowboxchild:hover > .card, button:hover > .card, flowboxchild:active > .card, f
     transition: all 0.2s ease;
 }
 
-.region-button > label {
+.region-button>label {
     color: @text_dark;
 }
 
-.region-button:not(:disabled):hover, .region-button:not(:disabled):focus {
+.region-button:not(:disabled):hover,
+.region-button:not(:disabled):focus {
     background-color: @accent_hover;
     color: @text_dark;
 }

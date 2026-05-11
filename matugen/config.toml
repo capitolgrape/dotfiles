@@ -5,6 +5,10 @@ input_path = '~/.config/matugen/templates/hyprland-colors.lua'
 output_path = '~/.config/hypr/colors.lua'
 post_hook = 'hyprctl reload'
 
+[templates.hyprlock]
+input_path = '~/.config/matugen/templates/hyprland-colors.conf'
+output_path = '~/.config/hypr/colors.conf'
+
 [templates.waybar]
 input_path = '~/.config/matugen/templates/colors.css'
 output_path = '~/.config/waybar/colors.css'
@@ -29,10 +33,6 @@ input_path = '~/.config/matugen/templates/gtk.css'
 output_path = '~/.config/gtk-4.0/gtk.css'
 post_hook = 'nautilus -q >/dev/null 2>&1 || true'
 
-[templates.gtk4-dark-css]
-input_path = '~/.config/matugen/templates/gtk.css'
-output_path = '~/.config/gtk-4.0/gtk-dark.css'
-
 [templates.hyprland-preview-share-picker]
 input_path = '~/.config/matugen/templates/hyprland-preview-share-picker-colors.css'
 output_path = '~/.config/hyprland-preview-share-picker/colors.css'
@@ -40,3 +40,8 @@ output_path = '~/.config/hyprland-preview-share-picker/colors.css'
 [templates.wlogout]
 input_path = '~/.config/matugen/templates/wlogout-colors.css'
 output_path = '~/.config/wlogout/colors.css'
+
+[templates.mako-colors]
+input_path = '~/.config/matugen/templates/mako-colors'
+output_path = '~/.config/mako/mako-colors'
+post_hook = 'pkill -x mako; mako >/dev/null 2>&1 &'

@@ -14,7 +14,7 @@ window#waybar {
     background-color: transparent;
 }
 
-#waybar > box {
+#waybar>box {
     border-radius: 0px;
     border-bottom: 1.5px solid alpha(@primary, 0.45);
     margin: 0px 0px 2px 0px;
@@ -123,6 +123,7 @@ tooltip {
     border: 1.5px solid alpha(@on_surface, 0.6);
     border-radius: 8px;
 }
+
 tooltip label {
     color: alpha(@on_surface, 0.65);
     font-weight: normal;
