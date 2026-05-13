@@ -164,19 +164,15 @@ local mainMod = "SUPER"
 
 hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. " + Q", hl.dsp.window.close())
-hl.bind(mainMod .. " + M",
-    hl.dsp.exec_cmd(
-        "wlogout --protocol xdg --buttons-per-row 4 --column-spacing 10 --row-spacing 10 --margin 18 --layout $HOME/.config/wlogout/layout --css $HOME/.config/wlogout/style.css"))
+hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("pkill -x wlogout || wlogout --protocol xdg --buttons-per-row 4 --column-spacing 10 --row-spacing 10 --margin 18 --layout $HOME/.config/wlogout/layout --css $HOME/.config/wlogout/style.css"))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd("nautilus"))
 hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("vicinae 'vicinae://launch/clipboard/history?toggle=true'"))
-hl.bind(mainMod .. " + SHIFT + V", hl.dsp.window.float({ action = "toggle" }))
+--hl.bind(mainMod .. " + SHIFT + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen())
-hl.bind(mainMod .. " + SHIFT + L", hl.dsp.exec_cmd("hyprlock"))
 hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd("$HOME/.config/.scripts/wallpaper/wall-select.sh"))
 hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd("vicinae toggle"))
-hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("pkill -x waybar; nohup waybar &>/dev/null &"))
-hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd("hyprctl reload"))
-hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
+hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("hyprctl reload; pkill -x waybar; nohup waybar &>/dev/null &"))
+--hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))
 
 hl.bind(mainMod .. " + left", hl.dsp.focus({ direction = "left" }))
@@ -189,9 +185,6 @@ for i = 1, 10 do
     hl.bind(mainMod .. " + " .. key, hl.dsp.focus({ workspace = i }))
     hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
 end
-
---hl.bind(mainMod .. " + S", hl.dsp.workspace.toggle_special("magic"))
---hl.bind(mainMod .. " + SHIFT + S", hl.dsp.window.move({ workspace = "special:magic" }))
 
 hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
 hl.bind(mainMod .. " + mouse_up", hl.dsp.focus({ workspace = "e-1" }))
@@ -215,16 +208,16 @@ hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = tr
 hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
 hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true })
 
-hl.bind("PRINT", hl.dsp.exec_cmd(screenshot .. " full"))
-hl.bind(mainMod .. " + PRINT", hl.dsp.exec_cmd(screenshot .. " area"))
+hl.bind("PRINT", hl.dsp.exec_cmd(screenshot .. " area"))
+hl.bind(mainMod .. " + PRINT", hl.dsp.exec_cmd(screenshot .. " full"))
 hl.bind(mainMod .. " + SHIFT + PRINT", hl.dsp.exec_cmd(screenshot .. " active"))
 
 
 hl.layer_rule({
-    match        = { namespace = "^vicinae$" },
-    blur         = true,
+    match = { namespace = "vicinae" },
+    blur = true,
     ignore_alpha = 0,
-    no_anim      = true,
+    no_anim = true,
 })
 
 hl.window_rule({
@@ -252,8 +245,9 @@ hl.window_rule({
 })
 
 hl.window_rule({
-    match  = { title = "^(Open|Save|Save As|Select a File|Choose.*|File Upload)$" },
+    match  = { class = "^xdg-desktop-portal-gtk$" },
     float  = true,
+    size   = "900 600",
     center = true,
 })
 
@@ -261,12 +255,14 @@ hl.window_rule({
     match = { title = "^(Picture-in-Picture|Picture in picture)$" },
     float = true,
     pin   = true,
+    size  = { 480, 270 },
+    move  = { "100%-w-20", "100%-h-20" },
 })
 
 hl.window_rule({
     match    = {
         class      = "^$",
-        title      = "^$",
+        title      = "^$", 
         xwayland   = true,
         float      = true,
         fullscreen = false,
@@ -288,7 +284,6 @@ hl.window_rule({
     no_blur          = true,
     max_size         = "1 1",
     opacity          = 0.0,
-    workspace        = "special:hidden",
 })
 
 hl.window_rule({
@@ -300,6 +295,6 @@ hl.window_rule({
 })
 
 hl.window_rule({
-    match   = { class = "^(vlc|mpv|imv)$" },
+    match   = { class = "^(mpv|imv)$" },
     opacity = 1.0,
 })

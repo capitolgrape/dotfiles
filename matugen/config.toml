@@ -45,3 +45,8 @@ output_path = '~/.config/wlogout/colors.css'
 input_path = '~/.config/matugen/templates/mako-colors'
 output_path = '~/.config/mako/mako-colors'
 post_hook = 'pkill -x mako; mako >/dev/null 2>&1 &'
+
+[templates.vicinae]
+input_path = './templates/vicinae.toml'
+output_path = '~/.local/share/vicinae/themes/matugen.toml'
+post_hook = 'vicinae theme set matugen'
