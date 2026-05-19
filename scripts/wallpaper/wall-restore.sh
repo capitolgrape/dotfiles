@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/.scripts/wallpaper"
+CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/scripts/wallpaper"
 STATE_FILE="${XDG_STATE_HOME:-$HOME/.local/state}/wall/current"
 
 if ! pgrep -x awww-daemon >/dev/null 2>&1; then

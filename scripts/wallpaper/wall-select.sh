@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/.scripts/wallpaper"
+CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/scripts/wallpaper"
 dir="$HOME/Pictures/Wallpapers"
 
 [ -d "$dir" ] || exit 0

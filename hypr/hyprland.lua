@@ -17,14 +17,14 @@ if not ok then
 end
 
 local terminal   = "ghostty"
-local screenshot = config_home .. "/.scripts/screenshot/screenshot.sh"
+local screenshot = config_home .. "/scripts/screenshot/screenshot.sh"
 
 hl.on("hyprland.start", function()
     hl.exec_cmd("vicinae server")
     hl.exec_cmd("waybar")
     hl.exec_cmd("mako")
     hl.exec_cmd("/usr/lib/hyprpolkitagent/hyprpolkitagent")
-    hl.exec_cmd(config_home .. "/.scripts/wallpaper/wall-restore.sh")
+    hl.exec_cmd(config_home .. "/scripts/wallpaper/wall-restore.sh")
     hl.exec_cmd("hypridle")
     hl.exec_cmd("systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP")
     hl.exec_cmd("dbus-update-activation-environment --systemd --all")
@@ -173,7 +173,7 @@ hl.bind(mainMod .. " + E", hl.dsp.exec_cmd("nautilus"))
 hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("vicinae 'vicinae://launch/clipboard/history?toggle=true'"))
 --hl.bind(mainMod .. " + SHIFT + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen())
-hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd(config_home .. "/.scripts/wallpaper/wall-select.sh"))
+hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd(config_home .. "/scripts/wallpaper/wall-select.sh"))
 hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd("vicinae toggle"))
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("hyprctl reload; pkill -x waybar; nohup waybar &>/dev/null &"))
 --hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())

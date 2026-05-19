@@ -46,12 +46,12 @@
         "tooltip": false,
     },
     "custom/screencast": {
-        "exec": "~/.config/.scripts/waybar/screencast.sh",
+        "exec": "~/.config/scripts/waybar/screencast.sh",
         "return-type": "json",
         "interval": 2,
         "format": "{text}",
         "hide-empty-text": true,
-        "on-click": "~/.config/.scripts/waybar/screencast.sh focus",
+        "on-click": "~/.config/scripts/waybar/screencast.sh focus",
     },
     "cpu": {
         "interval": 10,
