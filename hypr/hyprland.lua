@@ -17,14 +17,14 @@ if not ok then
 end
 
 local terminal   = "ghostty"
-local screenshot = "$HOME/.config/.scripts/screenshot/screenshot.sh"
+local screenshot = config_home .. "/.scripts/screenshot/screenshot.sh"
 
 hl.on("hyprland.start", function()
     hl.exec_cmd("vicinae server")
     hl.exec_cmd("waybar")
     hl.exec_cmd("mako")
     hl.exec_cmd("/usr/lib/hyprpolkitagent/hyprpolkitagent")
-    hl.exec_cmd("$HOME/.config/.scripts/wallpaper/wall-restore.sh")
+    hl.exec_cmd(config_home .. "/.scripts/wallpaper/wall-restore.sh")
     hl.exec_cmd("hypridle")
     hl.exec_cmd("systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP")
     hl.exec_cmd("dbus-update-activation-environment --systemd --all")
@@ -124,6 +124,7 @@ hl.config({
     misc = {
         force_default_wallpaper = -1,
         disable_hyprland_logo   = true,
+        screencopy_force_8b     = true,
     },
 })
 
@@ -167,12 +168,12 @@ local mainMod = "SUPER"
 
 hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. " + Q", hl.dsp.window.close())
-hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("pkill -x wlogout || wlogout --protocol xdg --buttons-per-row 4 --column-spacing 10 --row-spacing 10 --margin 18 --layout $HOME/.config/wlogout/layout --css $HOME/.config/wlogout/style.css"))
+hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("pkill -x wlogout || wlogout --protocol xdg --buttons-per-row 4 --column-spacing 10 --row-spacing 10 --margin 18 --layout " .. config_home .. "/wlogout/layout --css " .. config_home .. "/wlogout/style.css"))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd("nautilus"))
 hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("vicinae 'vicinae://launch/clipboard/history?toggle=true'"))
 --hl.bind(mainMod .. " + SHIFT + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen())
-hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd("$HOME/.config/.scripts/wallpaper/wall-select.sh"))
+hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd(config_home .. "/.scripts/wallpaper/wall-select.sh"))
 hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd("vicinae toggle"))
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("hyprctl reload; pkill -x waybar; nohup waybar &>/dev/null &"))
 --hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
@@ -221,6 +222,13 @@ hl.layer_rule({
     blur = true,
     ignore_alpha = 0,
     no_anim = true,
+})
+
+hl.layer_rule({
+    match        = { namespace = "^mako$" },
+    blur         = true,
+    ignore_alpha = 0.3,
+    no_anim      = true,
 })
 
 hl.window_rule({
@@ -298,6 +306,25 @@ hl.window_rule({
 })
 
 hl.window_rule({
-    match   = { class = "^(mpv|imv)$" },
-    opacity = 1.0,
+    match  = { class = "^org.pulseaudio.pavucontrol$|^blueman-manager$" },
+    float  = true,
+    center = true,
+    size   = "1000 700",
+})
+
+hl.window_rule({
+    match  = { class = "^hyprpolkitagent$" },
+    float  = true,
+    center = true,
+})
+
+hl.window_rule({
+    match            = { class = "^(mpv|imv)$" },
+    fullscreen       = true,
+    opacity          = 1.0,
+})
+
+hl.window_rule({
+    match     = { class = "^(vesktop|com.obsproject.Studio)$" },
+    immediate = false,
 })

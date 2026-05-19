@@ -8,11 +8,6 @@ file="$screenshot_dir/$(date +%Y-%m-%d_%H-%M-%S).png"
 
 mkdir -p "$screenshot_dir"
 
-if command -v makoctl >/dev/null 2>&1; then
-    makoctl dismiss --all --no-history >/dev/null 2>&1 || true
-    sleep 0.1
-fi
-
 case "$mode" in
     full)
         if ! grim "$file"; then
