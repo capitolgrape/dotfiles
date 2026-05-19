@@ -128,6 +128,9 @@ hl.config({
 })
 
 hl.config({
+    cursor = {
+        no_hardware_cursors = 1,
+    },
     xwayland = {
         force_zero_scaling = true,
     },

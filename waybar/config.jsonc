@@ -7,6 +7,7 @@
     "modules-right": [
         "tray",
         "custom/separator",
+        "custom/screencast",
         "network",
         "bluetooth",
         "custom/separator",
@@ -42,6 +43,14 @@
     "custom/separator": {
         "format": "|",
         "tooltip": false,
+    },
+    "custom/screencast": {
+        "exec": "$HOME/.config/.scripts/waybar/screencast.sh",
+        "return-type": "json",
+        "interval": 2,
+        "format": "{text}",
+        "hide-empty-text": true,
+        "on-click": "$HOME/.config/.scripts/waybar/screencast.sh focus",
     },
     "cpu": {
         "interval": 10,

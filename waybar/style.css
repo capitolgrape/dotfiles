@@ -85,6 +85,7 @@ window#waybar {
 
 #memory,
 #tray,
+#custom-screencast,
 #cpu,
 #clock,
 #network,
@@ -132,6 +133,7 @@ tooltip label {
 /* --- Hover for all modules  --- */
 #clock:hover,
 #tray:hover,
+#custom-screencast:hover,
 #cpu:hover,
 #memory:hover,
 #bluetooth:hover,
