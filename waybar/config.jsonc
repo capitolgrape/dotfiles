@@ -4,7 +4,7 @@
     "position": "top",
     "spacing": 0,
     "modules-left": ["hyprland/workspaces", "hyprland/window"],
-    "modules-center": ["mpris"],
+    "modules-center": [],
     "modules-right": [
         "tray",
         "custom/separator",
@@ -107,20 +107,6 @@
             "headphone": "",
             "default": ["", "", ""],
         },
-    },
-    "mpris": {
-        "format": "{player_icon} {dynamic}",
-        "format-paused": "{status_icon} <i>{dynamic}</i>",
-        "player-icons": {
-            "default": "",
-            "mpv": "󰕧",
-            "spotify": "",
-            "vlc": "󰕧"
-        },
-        "status-icons": {
-            "paused": ""
-        },
-        "max-length": 40
     },
     "tray": {
         "icon-size": 14,

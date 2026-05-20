@@ -263,11 +263,29 @@ hl.window_rule({
 })
 
 hl.window_rule({
-    match = { title = "^(Picture-in-Picture|Picture in picture)$" },
-    float = true,
-    pin   = true,
-    size  = { 480, 270 },
-    move  = { "100%-w-20", "100%-h-20" },
+  match = {
+    class = "^firefox$",
+    title = "^Picture-in-Picture$",
+  },
+  float = true,
+  pin = true,
+  size = { 480, 270 },
+  move = { "monitor_w-480-24", "monitor_h-270-24" },
+  keep_aspect_ratio = true,
+  no_initial_focus = true,
+})
+
+hl.window_rule({
+  match = {
+    initial_class = "^$",
+    initial_title = "^Picture in picture$",
+  },
+  float = true,
+  pin = true,
+  size = { 480, 270 },
+  move = { "monitor_w-480-24", "monitor_h-270-24" },
+  keep_aspect_ratio = true,
+  no_initial_focus = true,
 })
 
 hl.window_rule({
