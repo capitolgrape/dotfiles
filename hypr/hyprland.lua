@@ -16,30 +16,13 @@ if not ok then
     }
 end
 
-local terminal   = "ghostty"
 local screenshot = config_home .. "/scripts/screenshot/screenshot.sh"
 
 hl.on("hyprland.start", function()
-    hl.exec_cmd("vicinae server")
-    hl.exec_cmd("waybar")
-    hl.exec_cmd("mako")
-    hl.exec_cmd("/usr/lib/hyprpolkitagent/hyprpolkitagent")
-    hl.exec_cmd(config_home .. "/scripts/wallpaper/wall-restore.sh")
-    hl.exec_cmd("hypridle")
-    hl.exec_cmd("systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP")
-    hl.exec_cmd("dbus-update-activation-environment --systemd --all")
+    hl.exec_cmd("uwsm app -- " .. config_home .. "/scripts/wallpaper/wall-restore.sh")
+    --hl.exec_cmd("systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP")
+    --hl.exec_cmd("dbus-update-activation-environment --systemd --all")
 end)
-
-hl.env("XCURSOR_SIZE", "24")
-hl.env("HYPRCURSOR_SIZE", "24")
-hl.env("XDG_CURRENT_DESKTOP", "Hyprland")
-hl.env("XDG_SESSION_DESKTOP", "Hyprland")
-hl.env("XDG_SESSION_TYPE", "wayland")
-hl.env("QT_QPA_PLATFORM", "wayland;xcb")
-hl.env("GDK_BACKEND", "wayland,x11")
-hl.env("MOZ_ENABLE_WAYLAND", "1")
-hl.env("ELECTRON_OZONE_PLATFORM_HINT", "wayland")
-hl.env("OZONE_PLATFORM", "wayland")
 
 hl.config({
     general = {
@@ -119,42 +102,40 @@ hl.config({
     },
 })
 
-
 hl.config({
     misc = {
-        force_default_wallpaper = -1,
-        disable_hyprland_logo   = true,
-        screencopy_force_8b     = true,
-    },
+        force_default_wallpaper  = -1,
+        disable_hyprland_logo    = true,
+        disable_splash_rendering = true,
+    }
 })
 
 hl.config({
     cursor = {
         no_hardware_cursors = 1,
+        inactive_timeout = 0,
     },
     xwayland = {
         force_zero_scaling = true,
     },
     ecosystem = {
         no_update_news = true,
+        no_donation_nag = true,
     },
 })
 
 hl.config({
     input = {
         kb_layout    = "tr",
-        kb_variant   = "",
-        kb_model     = "",
-        kb_options   = "",
-        kb_rules     = "",
 
         follow_mouse = 1,
+        follow_mouse_threshold = 2,
+        follow_mouse_shrink = 2,
+        focus_on_close = 1,
 
         repeat_rate  = 35,
         repeat_delay = 200,
-
         sensitivity  = 0,
-
     },
 })
 
@@ -166,7 +147,7 @@ hl.gesture({
 
 local mainMod = "SUPER"
 
-hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd(terminal))
+hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd("ghostty"))
 hl.bind(mainMod .. " + Q", hl.dsp.window.close())
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("pkill -x wlogout || wlogout --protocol xdg --buttons-per-row 4 --column-spacing 10 --row-spacing 10 --margin 18 --layout " .. config_home .. "/wlogout/layout --css " .. config_home .. "/wlogout/style.css"))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd("nautilus"))
@@ -175,7 +156,7 @@ hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("vicinae 'vicinae://launch/clipboard/
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen())
 hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd(config_home .. "/scripts/wallpaper/wall-select.sh"))
 hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd("vicinae toggle"))
-hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("hyprctl reload; pkill -x waybar; nohup waybar &>/dev/null &"))
+hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("hyprctl reload; systemctl --user restart waybar.service"))
 --hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))
 
