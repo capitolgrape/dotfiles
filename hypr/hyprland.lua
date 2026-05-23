@@ -18,11 +18,13 @@ end
 
 local screenshot = config_home .. "/scripts/screenshot/screenshot.sh"
 
-hl.on("hyprland.start", function()
-    hl.exec_cmd("uwsm app -- " .. config_home .. "/scripts/wallpaper/wall-restore.sh")
-    --hl.exec_cmd("systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP")
-    --hl.exec_cmd("dbus-update-activation-environment --systemd --all")
-end)
+local function launch(command)
+    return function()
+        hl.exec_cmd("uwsm app -- " .. command)
+    end
+end
+
+hl.on("hyprland.start", launch(config_home .. "/scripts/wallpaper/wall-restore.sh"))
 
 hl.config({
     general = {
@@ -41,6 +43,13 @@ hl.config({
         allow_tearing    = true,
 
         layout           = "dwindle",
+
+        snap             = {
+            enabled      = true,
+            window_gap   = 8,
+            monitor_gap  = 12,
+            respect_gaps = true,
+        },
     },
 
     decoration = {
@@ -62,11 +71,19 @@ hl.config({
             size     = 3,
             passes   = 1,
             vibrancy = 0.1696,
+            xray     = true,
         },
     },
 
     animations = {
         enabled = true,
+    },
+
+    misc       = {
+        mouse_move_enables_dpms = true,
+        key_press_enables_dpms  = true,
+        enable_swallow          = true,
+        swallow_regex           = "^(ghostty|com\\.mitchellh\\.ghostty)$",
     },
 })
 
@@ -114,6 +131,7 @@ hl.config({
     cursor = {
         no_hardware_cursors = 1,
         inactive_timeout = 0,
+        hide_on_key_press = true,
     },
     xwayland = {
         force_zero_scaling = true,
@@ -147,16 +165,16 @@ hl.gesture({
 
 local mainMod = "SUPER"
 
-hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd("ghostty"))
+hl.bind(mainMod .. " + RETURN", launch("ghostty"))
 hl.bind(mainMod .. " + Q", hl.dsp.window.close())
-hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("pkill -x wlogout || wlogout --protocol xdg --buttons-per-row 4 --column-spacing 10 --row-spacing 10 --margin 18 --layout " .. config_home .. "/wlogout/layout --css " .. config_home .. "/wlogout/style.css"))
-hl.bind(mainMod .. " + E", hl.dsp.exec_cmd("nautilus"))
-hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("vicinae 'vicinae://launch/clipboard/history?toggle=true'"))
+hl.bind(mainMod .. " + M", launch("sh -c 'pkill -x wlogout || exec wlogout --protocol xdg --buttons-per-row 4 --column-spacing 10 --row-spacing 10 --margin 18 --layout " .. config_home .. "/wlogout/layout --css " .. config_home .. "/wlogout/style.css'"))
+hl.bind(mainMod .. " + E", launch("nautilus"))
+hl.bind(mainMod .. " + V", launch("vicinae 'vicinae://launch/clipboard/history?toggle=true'"))
 --hl.bind(mainMod .. " + SHIFT + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen())
-hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd(config_home .. "/scripts/wallpaper/wall-select.sh"))
-hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd("vicinae toggle"))
-hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("hyprctl reload; systemctl --user restart waybar.service"))
+hl.bind(mainMod .. " + SHIFT + W", launch(config_home .. "/scripts/wallpaper/wall-select.sh"))
+hl.bind(mainMod .. " + SPACE", launch("vicinae toggle"))
+hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("hyprctl reload; systemctl --user stop waybar.service; pkill -x waybar || true; systemctl --user start waybar.service"))
 --hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))
 
@@ -312,9 +330,20 @@ hl.window_rule({
 })
 
 hl.window_rule({
-    match  = { class = "^hyprpolkitagent$" },
-    float  = true,
-    center = true,
+    match      = { class = "^hyprpolkitagent$" },
+    float      = true,
+    center     = true,
+    pin        = true,
+    dim_around = true,
+})
+
+hl.window_rule({
+    match        = { class = "^(pinentry|pinentry-.*|org\\.gnupg\\.pinentry.*)$" },
+    float        = true,
+    center       = true,
+    pin          = true,
+    stay_focused = true,
+    dim_around   = true,
 })
 
 hl.window_rule({
