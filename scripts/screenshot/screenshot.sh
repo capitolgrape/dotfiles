@@ -3,37 +3,28 @@
 set -euo pipefail
 
 mode="${1:-full}"
-screenshot_dir="$HOME/Pictures/Screenshots"
+screenshot_dir="${XDG_SCREENSHOTS_DIR:-$HOME/Pictures/Screenshots}"
 file="$screenshot_dir/$(date +%Y-%m-%d_%H-%M-%S).png"
 
 mkdir -p "$screenshot_dir"
 
 case "$mode" in
     full)
-        if ! grim "$file"; then
-            rm -f "$file"
-            exit 1
-        fi
+        grim "$file"
         ;;
     area)
-        if ! geometry="$(slurp)" || [[ -z "$geometry" ]]; then
-            exit 0
-        fi
-
-        if ! grim -g "$geometry" "$file"; then
-            rm -f "$file"
-            exit 1
-        fi
+        geometry="$(slurp)" || exit 0
+        [[ -n "$geometry" ]] || exit 0
+        grim -g "$geometry" "$file"
         ;;
     active)
-        if ! geometry="$(hyprctl activewindow -j | jq -r '.at as $at | .size as $size | "\($at[0]),\($at[1]) \($size[0])x\($size[1])"')" || [[ -z "$geometry" ]]; then
-            exit 1
-        fi
+        geometry="$(hyprctl activewindow -j | jq -er '
+            select(.at != null and .size != null)
+            | "\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1])"
+        ')" || exit 1
 
-        if ! grim -g "$geometry" "$file"; then
-            rm -f "$file"
-            exit 1
-        fi
+        [[ -n "$geometry" ]] || exit 1
+        grim -g "$geometry" "$file"
         ;;
     *)
         printf 'Usage: %s [full|area|active]\n' "${0##*/}" >&2
@@ -47,10 +38,15 @@ if [[ ! -s "$file" ]]; then
 fi
 
 name="${file##*/}"
-notify=(notify-send -a Hyprland -i "$file" -h "string:image-path:$file")
 
+copied=false
 if command -v wl-copy >/dev/null 2>&1 && wl-copy --type image/png < "$file"; then
-    "${notify[@]}" "Screenshot copied" "$name"
-else
-    "${notify[@]}" "Screenshot saved" "$name"
+    copied=true
+fi
+
+if command -v notify-send >/dev/null 2>&1; then
+    if "$copied"; then
+        notify-send -a Hyprland -i "$file" -h "string:image-path:$file" \
+            "Screenshot saved" "$name"
+    fi
 fi
