@@ -323,10 +323,15 @@ hl.window_rule({
 })
 
 hl.window_rule({
-    match  = { class = "^org.pulseaudio.pavucontrol$|^blueman-manager$" },
+    match = {
+        class = "^org.pulseaudio.pavucontrol$|^blueman-manager$",
+        workspace = "w[1-999]",
+    },
+
     float  = true,
     center = true,
     size   = "1000 700",
+    pin    = true,
 })
 
 hl.window_rule({
