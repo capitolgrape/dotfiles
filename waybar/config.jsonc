@@ -56,12 +56,12 @@
     "cpu": {
         "interval": 10,
         "format": "cpu {usage}%",
-        "on-click": "/usr/bin/ghostty -e btm",
+        "on-click": "/usr/bin/ghostty --title=btm -e btm",
     },
     "memory": {
         "interval": 2,
         "format": "mem {used:0.1f}gb",
-        "on-click": "/usr/bin/ghostty -e btm",
+        "on-click": "/usr/bin/ghostty --title=btm -e btm",
     },
     "clock": {
         "format": "{:%H:%M}",

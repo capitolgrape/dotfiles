@@ -167,15 +167,12 @@ local mainMod = "SUPER"
 
 hl.bind(mainMod .. " + RETURN", launch("ghostty"))
 hl.bind(mainMod .. " + Q", hl.dsp.window.close())
-hl.bind(mainMod .. " + M", launch("sh -c 'pkill -x wlogout || exec wlogout --protocol xdg --buttons-per-row 4 --column-spacing 10 --row-spacing 10 --margin 18 --layout " .. config_home .. "/wlogout/layout --css " .. config_home .. "/wlogout/style.css'"))
 hl.bind(mainMod .. " + E", launch("nautilus"))
 hl.bind(mainMod .. " + V", launch("vicinae 'vicinae://launch/clipboard/history?toggle=true'"))
-hl.bind(mainMod .. " + SHIFT + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen())
 hl.bind(mainMod .. " + SHIFT + W", launch(config_home .. "/scripts/wallpaper/wall-select.sh"))
 hl.bind(mainMod .. " + SPACE", launch("vicinae toggle"))
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("hyprctl reload; pkill -x waybar || true; systemctl --user restart waybar.service"))
---hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))
 
 hl.bind(mainMod .. " + left", hl.dsp.focus({ direction = "left" }))
@@ -247,17 +244,9 @@ hl.window_rule({
 })
 
 hl.window_rule({
-    match            = { class = "^wlogout$" },
-    float            = true,
-    center           = true,
-    fullscreen_state = "0 0",
-    size             = { 760, 220 }
-})
-
-hl.window_rule({
     match  = { class = "^xdg-desktop-portal-gtk$" },
     float  = true,
-    size   = { 900, 600 },
+    size   = { 1440, 810 },
     center = true,
 })
 
@@ -332,7 +321,20 @@ hl.window_rule({
 
     float  = true,
     center = true,
-    size   = { 1000, 700 },
+    size   = { 1440, 810 },
+    pin    = true,
+})
+
+hl.window_rule({
+    match = {
+        class = "^com\\.mitchellh\\.ghostty$",
+        title = "^btm$",
+        workspace = "w[1-999]",
+    },
+
+    float  = true,
+    center = true,
+    size   = { 1440, 810 },
     pin    = true,
 })
 
