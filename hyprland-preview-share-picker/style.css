@@ -1,0 +1,164 @@
+@import url("file:///home/kemal/.config/hyprland-preview-share-picker/colors.css");
+
+* {
+    all: unset;
+    font-family:
+        Adwaita Sans,
+        sans-serif;
+    color: @foreground;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.window {
+    background-color: alpha(@background, 0.97);
+    border: 1px solid alpha(@outline_variant, 0.62);
+    border-radius: 8px;
+    box-shadow: 0 4px 14px alpha(@shadow, 0.16);
+    margin: 22px 6px 2px;
+    padding: 12px;
+}
+
+.notebook {
+    background-color: transparent;
+}
+
+tabs {
+    background-color: transparent;
+    border-bottom: 1px solid alpha(@outline_variant, 0.48);
+    margin-bottom: 12px;
+    padding: 0 0 6px;
+}
+
+tabs > tab {
+    background-color: transparent;
+    border: 0;
+    border-radius: 6px;
+    margin-right: 8px;
+    padding: 5px 10px;
+    transition:
+        background-color 140ms ease,
+        box-shadow 160ms ease;
+}
+
+.tab-label {
+    color: @muted;
+    font-size: 13px;
+    font-weight: 600;
+    transition: color 140ms ease;
+}
+
+tabs > tab:checked > .tab-label,
+tabs > tab:active > .tab-label {
+    text-decoration: none;
+    color: @on_primary_container;
+}
+
+tabs > tab:checked,
+tabs > tab:active {
+    background-color: alpha(@primary_container, 0.72);
+    box-shadow: inset 0 -2px 0 alpha(@primary, 0.72);
+}
+
+tabs > tab:focus > .tab-label,
+tabs > tab:hover > .tab-label {
+    color: @foreground;
+}
+
+.page {
+    padding: 10px 0 0;
+}
+
+.image-label {
+    color: @muted;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px 2px 2px;
+}
+
+flowboxchild {
+    padding: 3px;
+}
+
+flowboxchild > .card,
+button > .card {
+    background-color: alpha(@surface, 0.82);
+    border: 1px solid transparent;
+    border-radius: 7px;
+    padding: 4px;
+    transition:
+        background-color 140ms ease,
+        border-color 140ms ease,
+        box-shadow 140ms ease;
+}
+
+flowboxchild:hover > .card,
+button:hover > .card,
+button:focus > .card {
+    background-color: alpha(@surface_high, 0.9);
+    border-color: alpha(@outline, 0.42);
+}
+
+flowboxchild:active > .card,
+flowboxchild:selected > .card,
+button:active > .card,
+button:selected > .card {
+    background-color: alpha(@primary_container, 0.28);
+    border-color: alpha(@primary, 0.82);
+    box-shadow: 0 2px 8px alpha(@shadow, 0.12);
+}
+
+.card-loading {
+    background-color: alpha(@surface_low, 0.85);
+    border-color: alpha(@outline, 0.34);
+}
+
+.image {
+    border-radius: 5px;
+}
+
+.region-button,
+.restore-button {
+    background-color: @primary;
+    border: 1px solid alpha(@primary, 0.85);
+    border-radius: 7px;
+    color: @on_primary;
+    font-weight: 700;
+    padding: 8px 14px;
+    transition:
+        background-color 140ms ease,
+        border-color 140ms ease;
+}
+
+.region-button > label,
+.restore-button > label {
+    color: @on_primary;
+}
+
+.region-button:not(:disabled):hover,
+.region-button:not(:disabled):focus,
+.restore-button:not(:disabled):hover,
+.restore-button:not(:disabled):focus {
+    background-color: @primary_container;
+    border-color: @primary;
+    color: @on_primary_container;
+}
+
+.region-button:not(:disabled):hover > label,
+.region-button:not(:disabled):focus > label,
+.restore-button:not(:disabled):hover > label,
+.restore-button:not(:disabled):focus > label {
+    color: @on_primary_container;
+}
+
+.region-button:disabled,
+.restore-button:disabled {
+    background-color: alpha(@surface_high, 0.5);
+    border-color: alpha(@outline_variant, 0.38);
+    color: alpha(@muted, 0.72);
+}
+
+.region-button:disabled > label,
+.restore-button:disabled > label {
+    color: alpha(@muted, 0.72);
+}

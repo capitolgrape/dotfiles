@@ -1,13 +1,13 @@
-stylesheets: ["colors.css"]
+stylesheets: ["style.css"]
 default_page: outputs
 
 window:
-    height: 500
-    width: 1000
+    height: 630
+    width: 980
 
 image:
-    resize_size: 500
-    widget_size: 150
+    resize_size: 560
+    widget_size: 170
 
 classes:
     window: window
@@ -25,11 +25,11 @@ windows:
     min_per_row: 3
     max_per_row: 999
     clicks: 1
-    spacing: 12
+    spacing: 10
 
 outputs:
     clicks: 1
-    spacing: 4
+    spacing: 8
     show_label: false
     respect_output_scaling: true
 

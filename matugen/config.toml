@@ -57,10 +57,6 @@ output_path = '~/.local/share/color-schemes/Matugen.colors'
 input_path = '~/.config/matugen/templates/hyprland-preview-share-picker-colors.css'
 output_path = '~/.config/hyprland-preview-share-picker/colors.css'
 
-[templates.wlogout]
-input_path = '~/.config/matugen/templates/wlogout-colors.css'
-output_path = '~/.config/wlogout/colors.css'
-
 [templates.mako-colors]
 input_path = '~/.config/matugen/templates/mako-colors'
 output_path = '~/.config/mako/mako-colors'
