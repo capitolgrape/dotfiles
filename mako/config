@@ -12,6 +12,3 @@ icon-border-radius=6
 font=Adwaita Sans 14
 format=<b>%s</b>\n%b
 include=~/.config/mako/mako-colors
-
-[summary~="Screenshot copied"]
-max-icon-size=80
