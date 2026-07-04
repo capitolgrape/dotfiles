@@ -3,20 +3,22 @@
 * {
     all: unset;
     font-family:
-        Adwaita Sans,
+        "JetBrains Mono Nerd Font",
+        "Adwaita Sans",
         sans-serif;
     color: @foreground;
-    font-size: 14px;
-    font-weight: 500;
+    font-size: 13px;
+    font-weight: 700;
 }
 
 .window {
-    background-color: alpha(@background, 0.97);
-    border: 1px solid alpha(@outline_variant, 0.62);
-    border-radius: 8px;
-    box-shadow: 0 4px 14px alpha(@shadow, 0.16);
-    margin: 22px 6px 2px;
-    padding: 12px;
+    background-color: @background;
+    border: 1px solid alpha(@foreground, 0.08);
+    border-bottom: 1.5px solid alpha(@primary, 0.55);
+    border-radius: 0px;
+    box-shadow: 0 1px 2px alpha(@shadow, 0.8);
+    margin: 18px 6px 2px;
+    padding: 10px 12px 12px;
 }
 
 .notebook {
@@ -25,67 +27,76 @@
 
 tabs {
     background-color: transparent;
-    border-bottom: 1px solid alpha(@outline_variant, 0.48);
-    margin-bottom: 12px;
-    padding: 0 0 6px;
+    border-bottom: 1px solid alpha(@primary, 0.32);
+    margin-bottom: 10px;
+    padding: 0 0 5px;
 }
 
 tabs > tab {
     background-color: transparent;
     border: 0;
-    border-radius: 6px;
-    margin-right: 8px;
-    padding: 5px 10px;
+    border-radius: 0px;
+    margin-right: 4px;
+    padding: 4px 8px;
     transition:
         background-color 140ms ease,
-        box-shadow 160ms ease;
+        color 140ms ease;
 }
 
 .tab-label {
-    color: @muted;
+    color: alpha(@foreground, 0.55);
     font-size: 13px;
-    font-weight: 600;
+    font-weight: 900;
     transition: color 140ms ease;
 }
 
 tabs > tab:checked > .tab-label,
 tabs > tab:active > .tab-label {
     text-decoration: none;
-    color: @on_primary_container;
+    color: @on_primary;
 }
 
 tabs > tab:checked,
 tabs > tab:active {
-    background-color: alpha(@primary_container, 0.72);
-    box-shadow: inset 0 -2px 0 alpha(@primary, 0.72);
+    background-color: @primary;
+    box-shadow: none;
 }
 
 tabs > tab:focus > .tab-label,
 tabs > tab:hover > .tab-label {
-    color: @foreground;
+    color: @primary;
+}
+
+tabs > tab:checked:focus > .tab-label,
+tabs > tab:checked:hover > .tab-label,
+tabs > tab:active:focus > .tab-label,
+tabs > tab:active:hover > .tab-label {
+    color: @on_primary;
 }
 
 .page {
-    padding: 10px 0 0;
+    padding: 8px 0 0;
 }
 
 .image-label {
-    color: @muted;
-    font-size: 12px;
-    font-weight: 600;
-    padding: 6px 2px 2px;
+    color: alpha(@foreground, 0.64);
+    font-size: 11px;
+    font-weight: 800;
+    min-height: 13px;
+    padding: 2px 4px 0;
 }
 
 flowboxchild {
-    padding: 3px;
+    padding: 2px;
 }
 
+/* Keep previews square to match the Waybar surface language. */
 flowboxchild > .card,
 button > .card {
-    background-color: alpha(@surface, 0.82);
-    border: 1px solid transparent;
-    border-radius: 7px;
-    padding: 4px;
+    background-color: alpha(@surface_low, 0.82);
+    border: 1px solid alpha(@outline_variant, 0.28);
+    border-radius: 0px;
+    padding: 3px;
     transition:
         background-color 140ms ease,
         border-color 140ms ease,
@@ -95,36 +106,37 @@ button > .card {
 flowboxchild:hover > .card,
 button:hover > .card,
 button:focus > .card {
-    background-color: alpha(@surface_high, 0.9);
-    border-color: alpha(@outline, 0.42);
+    background-color: alpha(@surface_high, 0.92);
+    border-color: alpha(@primary, 0.52);
+    box-shadow: inset 0 -1px 0 alpha(@primary, 0.45);
 }
 
 flowboxchild:active > .card,
 flowboxchild:selected > .card,
 button:active > .card,
 button:selected > .card {
-    background-color: alpha(@primary_container, 0.28);
-    border-color: alpha(@primary, 0.82);
-    box-shadow: 0 2px 8px alpha(@shadow, 0.12);
+    background-color: alpha(@primary, 0.18);
+    border-color: @primary;
+    box-shadow: inset 0 -2px 0 alpha(@primary, 0.75);
 }
 
 .card-loading {
-    background-color: alpha(@surface_low, 0.85);
-    border-color: alpha(@outline, 0.34);
+    background-color: alpha(@surface_low, 0.68);
+    border-color: alpha(@outline_variant, 0.28);
 }
 
 .image {
-    border-radius: 5px;
+    border-radius: 0px;
 }
 
 .region-button,
 .restore-button {
     background-color: @primary;
-    border: 1px solid alpha(@primary, 0.85);
-    border-radius: 7px;
+    border: 1px solid @primary;
+    border-radius: 0px;
     color: @on_primary;
     font-weight: 700;
-    padding: 8px 14px;
+    padding: 7px 13px;
     transition:
         background-color 140ms ease,
         border-color 140ms ease;
@@ -139,7 +151,7 @@ button:selected > .card {
 .region-button:not(:disabled):focus,
 .restore-button:not(:disabled):hover,
 .restore-button:not(:disabled):focus {
-    background-color: @primary_container;
+    background-color: alpha(@primary_container, 0.94);
     border-color: @primary;
     color: @on_primary_container;
 }
@@ -153,12 +165,12 @@ button:selected > .card {
 
 .region-button:disabled,
 .restore-button:disabled {
-    background-color: alpha(@surface_high, 0.5);
-    border-color: alpha(@outline_variant, 0.38);
-    color: alpha(@muted, 0.72);
+    background-color: alpha(@surface_low, 0.62);
+    border-color: alpha(@outline_variant, 0.32);
+    color: alpha(@foreground, 0.35);
 }
 
 .region-button:disabled > label,
 .restore-button:disabled > label {
-    color: alpha(@muted, 0.72);
+    color: alpha(@foreground, 0.35);
 }

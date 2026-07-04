@@ -1,7 +1,10 @@
-background-color={{colors.on_primary.default.hex}}
-text-color={{colors.tertiary.default.hex}}
-border-color={{colors.tertiary_container.default.hex}}
-progress-color={{colors.tertiary_container.default.hex}}
+background-color={{colors.surface_container.default.hex}}f2
+text-color={{colors.on_surface.default.hex}}
+border-color={{colors.primary.default.hex}}8c
+progress-color={{colors.primary.default.hex}}
+
+[urgency=low]
+border-color={{colors.outline_variant.default.hex}}8c
 
 [mode=do-not-disturb]
 invisible=1
@@ -11,4 +14,6 @@ on-notify=none
 on-notify=none
 
 [urgency=high]
-border-color={{colors.error_container.default.hex}}
+background-color={{colors.surface_container_high.default.hex}}f5
+border-color={{colors.error.default.hex}}
+progress-color={{colors.error.default.hex}}
