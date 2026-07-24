@@ -1,5 +1,5 @@
 hl.monitor({
-    output   = "",
+    output   = "DP-1",
     mode     = "preferred",
     position = "auto",
     scale    = "auto",
