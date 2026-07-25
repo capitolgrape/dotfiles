@@ -2,7 +2,7 @@
     "exclusive": true,
     "reload_style_on_change": true,
     "position": "top",
-    "height": 28,
+    "height": 31,
     "spacing": 0,
     "modules-left": ["hyprland/workspaces", "hyprland/window"],
     "modules-center": [],
