@@ -50,16 +50,15 @@ if [[ -f "$SCRIPT_DIR/makepkg.conf" ]]; then
   log "Copied makepkg.conf"
 fi
 
-
 if command -v paru &> /dev/null; then
   log "Syncing repos and upgrading system (avoids partial-upgrade conflicts)..."
-  paru -Syu --noconfirm || warn "System upgrade failed, continuing anyway..."
+  paru -Syu --noconfirm --skipreview --noupgrademenu --nopgpfetch --useask || warn "System upgrade failed, continuing anyway..."
 
   if [[ -f "$SCRIPT_DIR/packages.ini" ]]; then
-    mapfile -t PACKAGES < <(grep -vE '^\s*($|\[)' "$SCRIPT_DIR/packages.ini")
+    mapfile -t PACKAGES < <(sed -E 's/\[[^]]*\]//g' "$SCRIPT_DIR/packages.ini" | tr -s '[:space:]' '\n' | grep -v '^$')
     if ((${#PACKAGES[@]})); then
       log "Installing ${#PACKAGES[@]} packages from packages.ini as a single transaction..."
-      if paru -S --needed --noconfirm "${PACKAGES[@]}"; then
+      if paru -S --needed --noconfirm --skipreview --noupgrademenu --nopgpfetch --useask "${PACKAGES[@]}"; then
         log "Installed all packages"
       else
         warn "Batch install reported an error; verifying which packages are actually missing..."
@@ -82,6 +81,8 @@ fi
 for name in fish ghostty hypr hyprland-preview-share-picker mako matugen uwsm waybar paru scripts; do
   copy "$SCRIPT_DIR/$name" "$CONFIG_DIR/$name"
 done
+
+mkdir -p "$CONFIG_DIR/ghostty/themes"
 
 [[ -d "$CONFIG_DIR/scripts" ]] && find "$CONFIG_DIR/scripts" -type f -name '*.sh' -exec chmod +x {} +
 
@@ -199,14 +200,76 @@ else
   warn "auto-cpufreq not installed, skipping"
 fi
 
+if pacman -Qq greetd &> /dev/null 2>&1; then
+  sudo mkdir -p /etc/greetd
+
+  if [[ -f /etc/greetd/config.toml ]] && ! grep -q "tuigreet" /etc/greetd/config.toml 2>/dev/null; then
+    mkdir -p "$BACKUP_DIR"
+    sudo cp /etc/greetd/config.toml "$BACKUP_DIR/greetd-config.toml"
+    warn "Backed up existing /etc/greetd/config.toml -> $BACKUP_DIR/greetd-config.toml"
+  fi
+
+  sudo tee /etc/greetd/config.toml > /dev/null <<'EOF'
+[terminal]
+vt = 1
+[default_session]
+command = "tuigreet --time --remember --remember-session --cmd 'uwsm start -e -D Hyprland hyprland.desktop'"
+user = "greeter"
+EOF
+  log "Wrote greetd config -> /etc/greetd/config.toml"
+
+  if systemctl list-unit-files --no-legend greetd.service 2>/dev/null | grep -q "^greetd.service"; then
+    if sudo systemctl enable greetd.service; then
+      log "Enabled greetd.service"
+    else
+      warn "Failed to enable greetd.service"
+    fi
+  else
+    warn "greetd.service not found, skipping enable"
+  fi
+else
+  warn "greetd not installed, skipping greetd setup"
+fi
+
 for svc in fstrim.timer paccache.timer bluetooth.service ananicy-cpp.service; do
   if systemctl list-unit-files --no-legend "$svc" 2>/dev/null | grep -q "^$svc"; then
-    sudo systemctl enable --now "$svc"
-    log "Enabled $svc"
+    if sudo systemctl enable --now "$svc"; then
+      log "Enabled $svc"
+    else
+      warn "Failed to enable $svc"
+    fi
   else
     warn "$svc not found, skipping"
   fi
 done
+
+for svc in waybar.service vicinae.service; do
+  if systemctl --user list-unit-files --no-legend "$svc" 2>/dev/null | grep -q "^$svc"; then
+    if systemctl --user enable --now "$svc"; then
+      log "Enabled --user $svc"
+    else
+      warn "Failed to enable --user $svc"
+    fi
+  else
+    warn "--user $svc not found, skipping"
+  fi
+done
+
+log "Cleaning up: removing orphaned packages and clearing package cache..."
+
+mapfile -t ORPHANS < <(pacman -Qtdq 2>/dev/null)
+if ((${#ORPHANS[@]})); then
+  log "Removing ${#ORPHANS[@]} orphaned package(s): ${ORPHANS[*]}"
+  sudo pacman -Rns --noconfirm "${ORPHANS[@]}" || warn "Failed to remove some orphaned packages"
+else
+  log "No orphaned packages to remove"
+fi
+
+if command -v paru &> /dev/null; then
+  sudo find /var/cache/pacman/pkg -maxdepth 1 -name 'download-*' -delete 2>/dev/null || true
+  paru -Sc --noconfirm || warn "Failed to clean package cache"
+  log "Cleaned package cache"
+fi
 
 [[ -d "$BACKUP_DIR" ]] && log "Existing configs backed up to $BACKUP_DIR"
 
