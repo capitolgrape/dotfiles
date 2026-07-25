@@ -78,7 +78,7 @@ else
   warn "paru not found, skipping package install"
 fi
 
-for name in fish ghostty hypr hyprland-preview-share-picker mako matugen uwsm waybar paru scripts; do
+for name in fish vicinae ghostty hypr hyprland-preview-share-picker mako matugen uwsm waybar paru scripts; do
   copy "$SCRIPT_DIR/$name" "$CONFIG_DIR/$name"
 done
 
