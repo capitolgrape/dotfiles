@@ -1,15 +1,36 @@
 #!/usr/bin/env bash
 
-set -Eeuo pipefail
+set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}"
-BACKUP_DIR="$CONFIG_DIR/dotfiles-backup/$(date +%Y%m%d-%H%M%S)"
+TIMESTAMP="$(date +%Y%m%d-%H%M%S)"
+BACKUP_DIR="$CONFIG_DIR/dotfiles-backup/$TIMESTAMP"
 
-exec > >(tee -i "$SCRIPT_DIR/install.log") 2>&1
+exec > >(tee -i "$SCRIPT_DIR/install-$TIMESTAMP.log") 2>&1
+
+WARNINGS=()
 
 log()  { printf '\033[32m==> %s\033[0m\n' "$*"; }
-warn() { printf '\033[33m!!  %s\033[0m\n' "$*"; }
+warn() { WARNINGS+=("$*"); printf '\033[33m!!  %s\033[0m\n' "$*"; }
+
+trap 'warn "Unexpected error at line $LINENO (exit code $?)"' ERR
+
+# Ask for sudo once up front and keep the timestamp alive in the background,
+# so a long unattended run doesn't stall on a re-prompt mid-script.
+# Output is silenced and set -e is disabled in the subshell so a transient
+# sudo refresh failure never kills the loop or writes into the main log.
+sudo -v
+(
+  set +e
+  while true; do
+    sudo -n true
+    sleep 60
+    kill -0 "$$" 2>/dev/null || exit
+  done
+) > /dev/null 2>&1 &
+SUDO_KEEPALIVE_PID=$!
+trap 'kill "$SUDO_KEEPALIVE_PID" 2>/dev/null' EXIT
 
 log "Script directory: $SCRIPT_DIR"
 
@@ -18,6 +39,10 @@ copy() {
   [[ -e "$src" ]] || { warn "Missing, skipping: $src"; return; }
 
   if [[ -e "$dest" ]]; then
+    if diff -rq "$src" "$dest" &> /dev/null; then
+      log "$dest already up to date, skipping"
+      return
+    fi
     mkdir -p "$BACKUP_DIR"
     mv "$dest" "$BACKUP_DIR/$(basename "$dest")"
     warn "Backed up existing $dest -> $BACKUP_DIR/$(basename "$dest")"
@@ -52,13 +77,13 @@ fi
 
 if command -v paru &> /dev/null; then
   log "Syncing repos and upgrading system (avoids partial-upgrade conflicts)..."
-  paru -Syu --noconfirm --skipreview --noupgrademenu --nopgpfetch --useask || warn "System upgrade failed, continuing anyway..."
+  paru -Syu --noconfirm --skipreview --noupgrademenu --nopgpfetch --useask < /dev/null || warn "System upgrade failed, continuing anyway..."
 
   if [[ -f "$SCRIPT_DIR/packages.ini" ]]; then
     mapfile -t PACKAGES < <(sed -E 's/\[[^]]*\]//g' "$SCRIPT_DIR/packages.ini" | tr -s '[:space:]' '\n' | grep -v '^$')
     if ((${#PACKAGES[@]})); then
       log "Installing ${#PACKAGES[@]} packages from packages.ini as a single transaction..."
-      if paru -S --needed --noconfirm --skipreview --noupgrademenu --nopgpfetch --useask "${PACKAGES[@]}"; then
+      if paru -S --needed --noconfirm --skipreview --noupgrademenu --nopgpfetch --useask "${PACKAGES[@]}" < /dev/null; then
         log "Installed all packages"
       else
         warn "Batch install reported an error; verifying which packages are actually missing..."
@@ -78,7 +103,7 @@ else
   warn "paru not found, skipping package install"
 fi
 
-for name in fish vicinae ghostty hypr hyprland-preview-share-picker mako matugen uwsm waybar paru scripts; do
+for name in fish vicinae ghostty hypr hyprland-preview-share-picker mako matugen uwsm waybar paru scripts fastfetch; do
   copy "$SCRIPT_DIR/$name" "$CONFIG_DIR/$name"
 done
 
@@ -136,6 +161,14 @@ if [ ! -d "$CONFIG_DIR/nvim" ]; then
   else
     warn "Failed to clone kickstart.nvim"
   fi
+elif [ -d "$CONFIG_DIR/nvim/.git" ]; then
+  if git -C "$CONFIG_DIR/nvim" pull --ff-only &> /dev/null; then
+    log "Updated kickstart.nvim"
+  else
+    warn "Failed to update kickstart.nvim (local changes or diverged history?), leaving as-is"
+  fi
+else
+  warn "$CONFIG_DIR/nvim exists but isn't a git repo, skipping kickstart.nvim update"
 fi
 
 if command -v gsettings &> /dev/null; then
@@ -203,20 +236,26 @@ fi
 if pacman -Qq greetd &> /dev/null 2>&1; then
   sudo mkdir -p /etc/greetd
 
-  if [[ -f /etc/greetd/config.toml ]] && ! grep -q "tuigreet" /etc/greetd/config.toml 2>/dev/null; then
-    mkdir -p "$BACKUP_DIR"
-    sudo cp /etc/greetd/config.toml "$BACKUP_DIR/greetd-config.toml"
-    warn "Backed up existing /etc/greetd/config.toml -> $BACKUP_DIR/greetd-config.toml"
-  fi
-
-  sudo tee /etc/greetd/config.toml > /dev/null <<'EOF'
+  GREETD_CONFIG_NEW="$(cat <<'EOF'
 [terminal]
 vt = 1
 [default_session]
 command = "tuigreet --time --remember --remember-session --cmd 'uwsm start -e -D Hyprland hyprland.desktop'"
 user = "greeter"
 EOF
-  log "Wrote greetd config -> /etc/greetd/config.toml"
+)"
+
+  if [[ -f /etc/greetd/config.toml ]] && diff -q <(printf '%s' "$GREETD_CONFIG_NEW") /etc/greetd/config.toml &> /dev/null; then
+    log "greetd config already up to date, skipping"
+  else
+    if [[ -f /etc/greetd/config.toml ]]; then
+      mkdir -p "$BACKUP_DIR"
+      sudo cp /etc/greetd/config.toml "$BACKUP_DIR/greetd-config.toml"
+      warn "Backed up existing /etc/greetd/config.toml -> $BACKUP_DIR/greetd-config.toml"
+    fi
+    printf '%s\n' "$GREETD_CONFIG_NEW" | sudo tee /etc/greetd/config.toml > /dev/null
+    log "Wrote greetd config -> /etc/greetd/config.toml"
+  fi
 
   if systemctl list-unit-files --no-legend greetd.service 2>/dev/null | grep -q "^greetd.service"; then
     if sudo systemctl enable greetd.service; then
@@ -267,10 +306,19 @@ fi
 
 if command -v paru &> /dev/null; then
   sudo find /var/cache/pacman/pkg -maxdepth 1 -name 'download-*' -delete 2>/dev/null || true
-  paru -Sc --noconfirm || warn "Failed to clean package cache"
+  paru -Sc --noconfirm < /dev/null || warn "Failed to clean package cache"
   log "Cleaned package cache"
 fi
 
 [[ -d "$BACKUP_DIR" ]] && log "Existing configs backed up to $BACKUP_DIR"
+
+if ((${#WARNINGS[@]})); then
+  log "Completed with ${#WARNINGS[@]} warning(s):"
+  for w in "${WARNINGS[@]}"; do
+    printf '    - %s\n' "$w"
+  done
+else
+  log "Completed with no warnings."
+fi
 
 log "Dotfiles setup complete."
