@@ -16,10 +16,6 @@ warn() { WARNINGS+=("$*"); printf '\033[33m!!  %s\033[0m\n' "$*"; }
 
 trap 'warn "Unexpected error at line $LINENO (exit code $?)"' ERR
 
-# Ask for sudo once up front and keep the timestamp alive in the background,
-# so a long unattended run doesn't stall on a re-prompt mid-script.
-# Output is silenced and set -e is disabled in the subshell so a transient
-# sudo refresh failure never kills the loop or writes into the main log.
 sudo -v
 (
   set +e
@@ -103,7 +99,7 @@ else
   warn "paru not found, skipping package install"
 fi
 
-for name in fish vicinae ghostty hypr hyprland-preview-share-picker mako matugen uwsm waybar paru scripts fastfetch; do
+for name in fish vicinae ghostty hypr hyprland-preview-share-picker mako matugen uwsm waybar paru scripts zed fastfetch; do
   copy "$SCRIPT_DIR/$name" "$CONFIG_DIR/$name"
 done
 
@@ -140,6 +136,11 @@ fi
 if [[ -f "$SCRIPT_DIR/xdg-terminals.list" ]]; then
   cp "$SCRIPT_DIR/xdg-terminals.list" "$CONFIG_DIR/xdg-terminals.list"
   log "Copied xdg-terminals.list"
+fi
+
+if [[ -f "$SCRIPT_DIR/mimeapps.list" ]]; then
+  cp "$SCRIPT_DIR/mimeapps.list" "$CONFIG_DIR/mimeapps.list"
+  log "Copied mimeapps.list"
 fi
 
 if command -v fish &> /dev/null && [ "$SHELL" != "$(command -v fish)" ]; then
@@ -282,7 +283,7 @@ for svc in fstrim.timer paccache.timer bluetooth.service ananicy-cpp.service; do
   fi
 done
 
-for svc in waybar.service vicinae.service; do
+for svc in waybar.service vicinae.service hypridle.service; do
   if systemctl --user list-unit-files --no-legend "$svc" 2>/dev/null | grep -q "^$svc"; then
     if systemctl --user enable --now "$svc"; then
       log "Enabled --user $svc"
