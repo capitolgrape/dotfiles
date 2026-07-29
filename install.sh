@@ -271,7 +271,40 @@ else
   warn "greetd not installed, skipping greetd setup"
 fi
 
-for svc in fstrim.timer paccache.timer bluetooth.service ananicy-cpp.service; do
+if command -v virsh &> /dev/null; then
+  log "Configuring libvirt/KVM..."
+
+  if [[ ! -e /dev/kvm ]]; then
+    warn "KVM is not available. Enable CPU virtualization support in BIOS/UEFI. See https://wiki.archlinux.org/title/KVM"
+  else
+    sudo usermod "$USER" -aG kvm || warn "Failed to add $USER to kvm group"
+  fi
+
+  sudo sed -i 's/^#\?firewall_backend\s*=\s*".*"/firewall_backend = "iptables"/' /etc/libvirt/network.conf \
+    || warn "Failed to set libvirt firewall_backend"
+
+  if systemctl is-active --quiet polkit; then
+    sudo sed -i 's/^#\?auth_unix_ro\s*=\s*".*"/auth_unix_ro = "polkit"/' /etc/libvirt/libvirtd.conf
+    sudo sed -i 's/^#\?auth_unix_rw\s*=\s*".*"/auth_unix_rw = "polkit"/' /etc/libvirt/libvirtd.conf
+  fi
+
+  sudo usermod "$USER" -aG libvirt || warn "Failed to add $USER to libvirt group"
+
+  for value in libvirt libvirt_guest; do
+    if ! grep -wq "$value" /etc/nsswitch.conf; then
+      sudo sed -i "/^hosts:/ s/\$/ ${value}/" /etc/nsswitch.conf
+    fi
+  done
+
+  sudo systemctl enable --now libvirtd.service || warn "Failed to enable libvirtd.service"
+  sudo virsh net-autostart default || warn "Failed to autostart default libvirt network"
+
+  log "Libvirt/KVM configuration complete"
+else
+  warn "virsh not found, skipping libvirt/KVM setup (make sure libvirt is in packages.ini)"
+fi
+
+for svc in fstrim.timer paccache.timer bluetooth.service ananicy-cpp.service rtkit-daemon.service; do
   if systemctl list-unit-files --no-legend "$svc" 2>/dev/null | grep -q "^$svc"; then
     if sudo systemctl enable --now "$svc"; then
       log "Enabled $svc"
@@ -306,7 +339,7 @@ else
 fi
 
 if command -v paru &> /dev/null; then
-  sudo find /var/cache/pacman/pkg -maxdepth 1 -name 'download-*' -delete 2>/dev/null || true
+  sudo find /var/cache/pacman/pkg -maxdepth 1 -name 'download-*' -exec rm -rf {} + 2>/dev/null || true
   paru -Sc --noconfirm < /dev/null || warn "Failed to clean package cache"
   log "Cleaned package cache"
 fi
