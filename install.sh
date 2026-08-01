@@ -99,7 +99,7 @@ else
   warn "paru not found, skipping package install"
 fi
 
-for name in fish vicinae ghostty hypr hyprland-preview-share-picker mako matugen uwsm waybar paru scripts zed fastfetch; do
+for name in fish vicinae ghostty hypr hyprland-preview-share-picker mako matugen uwsm waybar paru scripts zed mpv fastfetch; do
   copy "$SCRIPT_DIR/$name" "$CONFIG_DIR/$name"
 done
 
