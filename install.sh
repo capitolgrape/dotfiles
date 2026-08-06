@@ -87,7 +87,11 @@ if command -v paru &> /dev/null; then
         for pkg in "${PACKAGES[@]}"; do
           pacman -Qq "$pkg" &> /dev/null || FAILED_PACKAGES+=("$pkg")
         done
-        ((${#FAILED_PACKAGES[@]})) && warn "Packages that failed: ${FAILED_PACKAGES[*]}" || log "All packages present despite reported error"
+        if ((${#FAILED_PACKAGES[@]})); then
+          warn "Packages that failed: ${FAILED_PACKAGES[*]}"
+        else
+          log "All packages present despite reported error"
+        fi
       fi
     else
       warn "packages.ini has no packages listed, skipping"
@@ -103,7 +107,18 @@ for name in fish vicinae ghostty hypr hyprland-preview-share-picker mako matugen
   copy "$SCRIPT_DIR/$name" "$CONFIG_DIR/$name"
 done
 
+if [[ -f "$SCRIPT_DIR/.luarc.json" ]]; then
+  if [[ -e "$CONFIG_DIR/.luarc.json" ]] && ! cmp -s "$SCRIPT_DIR/.luarc.json" "$CONFIG_DIR/.luarc.json"; then
+    mkdir -p "$BACKUP_DIR"
+    mv "$CONFIG_DIR/.luarc.json" "$BACKUP_DIR/.luarc.json"
+    warn "Backed up existing $CONFIG_DIR/.luarc.json -> $BACKUP_DIR/.luarc.json"
+  fi
+  cp "$SCRIPT_DIR/.luarc.json" "$CONFIG_DIR/.luarc.json"
+  log "Copied .luarc.json"
+fi
+
 mkdir -p "$CONFIG_DIR/ghostty/themes"
+mkdir -p "$CONFIG_DIR/zed/themes"
 
 [[ -d "$CONFIG_DIR/scripts" ]] && find "$CONFIG_DIR/scripts" -type f -name '*.sh' -exec chmod +x {} +
 
