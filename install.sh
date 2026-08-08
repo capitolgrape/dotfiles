@@ -67,6 +67,11 @@ fi
 
 if [[ -f "$SCRIPT_DIR/makepkg.conf" ]]; then
   mkdir -p "$CONFIG_DIR/pacman"
+  if [[ -e "$CONFIG_DIR/pacman/makepkg.conf" ]] && ! cmp -s "$SCRIPT_DIR/makepkg.conf" "$CONFIG_DIR/pacman/makepkg.conf"; then
+    mkdir -p "$BACKUP_DIR"
+    mv "$CONFIG_DIR/pacman/makepkg.conf" "$BACKUP_DIR/makepkg.conf"
+    warn "Backed up existing $CONFIG_DIR/pacman/makepkg.conf -> $BACKUP_DIR/makepkg.conf"
+  fi
   cp "$SCRIPT_DIR/makepkg.conf" "$CONFIG_DIR/pacman/makepkg.conf"
   log "Copied makepkg.conf"
 fi
@@ -149,11 +154,21 @@ else
 fi
 
 if [[ -f "$SCRIPT_DIR/xdg-terminals.list" ]]; then
+  if [[ -e "$CONFIG_DIR/xdg-terminals.list" ]] && ! cmp -s "$SCRIPT_DIR/xdg-terminals.list" "$CONFIG_DIR/xdg-terminals.list"; then
+    mkdir -p "$BACKUP_DIR"
+    mv "$CONFIG_DIR/xdg-terminals.list" "$BACKUP_DIR/xdg-terminals.list"
+    warn "Backed up existing $CONFIG_DIR/xdg-terminals.list -> $BACKUP_DIR/xdg-terminals.list"
+  fi
   cp "$SCRIPT_DIR/xdg-terminals.list" "$CONFIG_DIR/xdg-terminals.list"
   log "Copied xdg-terminals.list"
 fi
 
 if [[ -f "$SCRIPT_DIR/mimeapps.list" ]]; then
+  if [[ -e "$CONFIG_DIR/mimeapps.list" ]] && ! cmp -s "$SCRIPT_DIR/mimeapps.list" "$CONFIG_DIR/mimeapps.list"; then
+    mkdir -p "$BACKUP_DIR"
+    mv "$CONFIG_DIR/mimeapps.list" "$BACKUP_DIR/mimeapps.list"
+    warn "Backed up existing $CONFIG_DIR/mimeapps.list -> $BACKUP_DIR/mimeapps.list"
+  fi
   cp "$SCRIPT_DIR/mimeapps.list" "$CONFIG_DIR/mimeapps.list"
   log "Copied mimeapps.list"
 fi

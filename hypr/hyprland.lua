@@ -7,6 +7,7 @@ hl.monitor({
 
 local config_home = os.getenv("XDG_CONFIG_HOME") or (os.getenv("HOME") .. "/.config")
 local ok, colors = pcall(dofile, config_home .. "/hypr/colors.lua")
+
 if not ok then
     colors = {
         primary         = "rgba(33ccffdd)",
@@ -18,22 +19,21 @@ end
 
 local screenshot = config_home .. "/scripts/screenshot/screenshot.sh"
 
-local function launch(command)
+local function uwsm(command)
     return function()
         hl.exec_cmd("uwsm app -- " .. command)
     end
 end
 
 hl.on("hyprland.start", function()
-    hl.exec_cmd("uwsm app -- " .. config_home .. "/scripts/wallpaper/wall-restore.sh")
-    hl.exec_cmd("uwsm app -- /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1")
+    uwsm(config_home .. "/scripts/wallpaper/wall-restore.sh")()
+    uwsm("/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1")()
 end)
 
 hl.config({
-    general    = {
+    general = {
         gaps_in          = 2,
         gaps_out         = 9,
-
         border_size      = 1,
 
         col              = {
@@ -42,9 +42,7 @@ hl.config({
         },
 
         resize_on_border = false,
-
         allow_tearing    = true,
-
         layout           = "dwindle",
 
         snap             = {
@@ -82,20 +80,59 @@ hl.config({
         enabled = true,
     },
 
-    misc       = {
-        mouse_move_enables_dpms = true,
-        key_press_enables_dpms  = true,
-        enable_swallow          = true,
-        swallow_regex           = "^(ghostty|com\\.mitchellh\\.ghostty)$",
+    dwindle = {
+        preserve_split = true,
+    },
+
+    input = {
+        kb_layout              = "tr",
+
+        follow_mouse           = 1,
+        follow_mouse_threshold = 2,
+        follow_mouse_shrink    = 2,
+        focus_on_close         = 1,
+
+        repeat_rate            = 35,
+        repeat_delay           = 200,
+        sensitivity            = 0,
+    },
+
+    cursor = {
+        no_hardware_cursors = 2,
+        inactive_timeout    = 0,
+        hide_on_key_press   = true,
+    },
+
+    misc = {
+        mouse_move_enables_dpms  = true,
+        key_press_enables_dpms   = true,
+
+        enable_swallow           = true,
+        swallow_regex            = "^(ghostty|com\\.mitchellh\\.ghostty)$",
+
+        force_default_wallpaper  = -1,
+        disable_hyprland_logo    = true,
+        disable_splash_rendering = true,
+    },
+
+    xwayland = {
+        force_zero_scaling = true,
+    },
+
+    render = {
+        direct_scanout = 2,
+    },
+
+    ecosystem = {
+        no_update_news  = true,
+        no_donation_nag = true,
     },
 })
 
 hl.curve("easeOutQuint", { type = "bezier", points = { { 0.23, 1 }, { 0.32, 1 } } })
-hl.curve("easeInOutCubic", { type = "bezier", points = { { 0.65, 0.05 }, { 0.36, 1 } } })
 hl.curve("linear", { type = "bezier", points = { { 0, 0 }, { 1, 1 } } })
 hl.curve("almostLinear", { type = "bezier", points = { { 0.5, 0.5 }, { 0.75, 1 } } })
 hl.curve("quick", { type = "bezier", points = { { 0.15, 0 }, { 0.1, 1 } } })
-
 hl.curve("easy", { type = "spring", mass = 1, stiffness = 238.1191, dampening = 24.21279333 })
 
 hl.animation({ leaf = "global", enabled = true, speed = 10, bezier = "default" })
@@ -116,70 +153,22 @@ hl.animation({ leaf = "workspacesIn", enabled = true, speed = 1.21, bezier = "al
 hl.animation({ leaf = "workspacesOut", enabled = true, speed = 1.94, bezier = "almostLinear", style = "fade" })
 hl.animation({ leaf = "zoomFactor", enabled = true, speed = 7, bezier = "quick" })
 
-hl.config({
-    dwindle = {
-        preserve_split = true,
-    },
-})
-
-hl.config({
-    misc = {
-        force_default_wallpaper  = -1,
-        disable_hyprland_logo    = true,
-        disable_splash_rendering = true,
-    }
-})
-
-hl.config({
-    cursor = {
-        no_hardware_cursors = 1,
-        inactive_timeout = 0,
-        hide_on_key_press = true,
-    },
-    xwayland = {
-        force_zero_scaling = true,
-    },
-    render = {
-        direct_scanout = 2,
-    },
-    ecosystem = {
-        no_update_news = true,
-        no_donation_nag = true,
-    },
-})
-
-hl.config({
-    input = {
-        kb_layout              = "tr",
-
-        follow_mouse           = 1,
-        follow_mouse_threshold = 2,
-        follow_mouse_shrink    = 2,
-        focus_on_close         = 1,
-
-        repeat_rate            = 35,
-        repeat_delay           = 200,
-        sensitivity            = 0,
-    },
-})
-
 hl.gesture({
-    fingers = 3,
+    fingers   = 3,
     direction = "horizontal",
-    action = "workspace"
+    action    = "workspace",
 })
 
 local mainMod = "SUPER"
 
-hl.bind(mainMod .. " + RETURN", launch("ghostty"))
+hl.bind(mainMod .. " + RETURN", uwsm("ghostty"))
 hl.bind(mainMod .. " + Q", hl.dsp.window.close())
-hl.bind(mainMod .. " + E", launch("nautilus"))
-hl.bind(mainMod .. " + V", launch("vicinae 'vicinae://launch/clipboard/history?toggle=true'"))
+hl.bind(mainMod .. " + E", uwsm("nautilus"))
+hl.bind(mainMod .. " + V", uwsm("vicinae 'vicinae://launch/clipboard/history?toggle=true'"))
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen())
-hl.bind(mainMod .. " + SHIFT + W", launch(config_home .. "/scripts/wallpaper/wall-select.sh"))
-hl.bind(mainMod .. " + SPACE", launch("vicinae toggle"))
-hl.bind(mainMod .. " + R",
-    hl.dsp.exec_cmd("hyprctl reload; pkill -x waybar || true; systemctl --user restart waybar.service"))
+hl.bind(mainMod .. " + SHIFT + W", uwsm(config_home .. "/scripts/wallpaper/wall-select.sh"))
+hl.bind(mainMod .. " + SPACE", uwsm("vicinae toggle"))
+hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("hyprctl reload && systemctl --user restart waybar.service"))
 hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))
 
 hl.bind(mainMod .. " + left", hl.dsp.focus({ direction = "left" }))
@@ -207,8 +196,10 @@ hl.bind("XF86AudioMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ to
     { locked = true, repeating = true })
 hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"),
     { locked = true, repeating = true })
-hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%+"), { locked = true, repeating = true })
-hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%-"), { locked = true, repeating = true })
+hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%+"),
+    { locked = true, repeating = true })
+hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%-"),
+    { locked = true, repeating = true })
 
 hl.bind("XF86AudioNext", hl.dsp.exec_cmd("playerctl next"), { locked = true })
 hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
@@ -219,12 +210,11 @@ hl.bind("PRINT", hl.dsp.exec_cmd(screenshot .. " area"))
 hl.bind(mainMod .. " + PRINT", hl.dsp.exec_cmd(screenshot .. " full"))
 hl.bind(mainMod .. " + SHIFT + PRINT", hl.dsp.exec_cmd(screenshot .. " active"))
 
-
 hl.layer_rule({
-    match = { namespace = "vicinae" },
-    blur = true,
+    match        = { namespace = "vicinae" },
+    blur         = true,
     ignore_alpha = 0,
-    no_anim = true,
+    no_anim      = true,
 })
 
 hl.layer_rule({
@@ -237,11 +227,7 @@ hl.layer_rule({
 hl.window_rule({
     match          = { class = ".*" },
     suppress_event = "maximize",
-})
-
-hl.window_rule({
-    match        = { class = ".*" },
-    idle_inhibit = "fullscreen",
+    idle_inhibit   = "fullscreen",
 })
 
 hl.window_rule({
@@ -258,33 +244,35 @@ hl.window_rule({
 })
 
 hl.window_rule({
-    match = {
+    match             = {
         class = "^firefox$",
         title = "^Picture-in-Picture$",
     },
-    float = true,
-    pin = true,
-    size = { 480, 270 },
-    move = { "monitor_w-480-24", "monitor_h-270-24" },
+
+    float             = true,
+    pin               = true,
+    size              = { 480, 270 },
+    move              = { "monitor_w-480-24", "monitor_h-270-24" },
     keep_aspect_ratio = true,
-    no_initial_focus = true,
+    no_initial_focus  = true,
+})
+
+hl.window_rule({
+    match             = {
+        initial_class = "^$",
+        initial_title = "^Picture in picture$",
+    },
+
+    float             = true,
+    pin               = true,
+    size              = { 480, 270 },
+    move              = { "monitor_w-480-24", "monitor_h-270-24" },
+    keep_aspect_ratio = true,
+    no_initial_focus  = true,
 })
 
 hl.window_rule({
     match = {
-        initial_class = "^$",
-        initial_title = "^Picture in picture$",
-    },
-    float = true,
-    pin = true,
-    size = { 480, 270 },
-    move = { "monitor_w-480-24", "monitor_h-270-24" },
-    keep_aspect_ratio = true,
-    no_initial_focus = true,
-})
-
-hl.window_rule({
-    match    = {
         class      = "^$",
         title      = "^$",
         xwayland   = true,
@@ -292,6 +280,7 @@ hl.window_rule({
         fullscreen = false,
         pin        = false,
     },
+
     no_focus = true,
 })
 
@@ -299,6 +288,7 @@ hl.window_rule({
     match           = { class = "^(steam_app_.*|gamescope|cs2)$" },
     immediate       = true,
     confine_pointer = true,
+    content         = "game",
 })
 
 hl.window_rule({
@@ -321,14 +311,10 @@ hl.window_rule({
 })
 
 hl.window_rule({
-    match  = {
-        class = "^org.pulseaudio.pavucontrol$|^blueman-manager$",
-        workspace = "w[1-999]",
-    },
-
+    match  = { class = "^(org\\.pulseaudio\\.pavucontrol|blueman-manager)$" },
     float  = true,
     center = true,
-    size   = { 1440, 810 },
+    size   = { 1600, 900 },
     pin    = true,
 })
 
@@ -336,38 +322,28 @@ hl.window_rule({
     match  = {
         class = "^com\\.mitchellh\\.ghostty$",
         title = "^btm$",
-        workspace = "w[1-999]",
     },
 
     float  = true,
     center = true,
-    size   = { 1440, 810 },
+    size   = { 1600, 900 },
     pin    = true,
 })
 
 hl.window_rule({
-    match      = { class = "^hyprpolkitagent$" },
-    float      = true,
-    center     = true,
-    pin        = true,
-    dim_around = true,
-})
+    match           = {
+        class = "^(polkit-gnome-authentication-agent-1|pinentry|pinentry-.*|org\\.gnupg\\.pinentry.*)$",
+    },
 
-hl.window_rule({
-    match        = { class = "^(pinentry|pinentry-.*|org\\.gnupg\\.pinentry.*)$" },
-    float        = true,
-    center       = true,
-    pin          = true,
-    stay_focused = true,
-    dim_around   = true,
+    float           = true,
+    center          = true,
+    pin             = true,
+    stay_focused    = true,
+    dim_around      = true,
+    no_screen_share = true,
 })
 
 hl.window_rule({
     match      = { class = "^(mpv|imv)$" },
     fullscreen = true,
-})
-
-hl.window_rule({
-    match     = { class = "^(vesktop|com.obsproject.Studio)$" },
-    immediate = false,
 })

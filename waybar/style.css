@@ -98,16 +98,20 @@ window#waybar {
     opacity: 0.6;
 }
 
+#custom-screencast,
+#network,
 #bluetooth {
-    padding-left: 0px;
+    min-width: 18px;
+    padding: 0;
+    margin: 1px 2px;
+}
+
+#custom-screencast {
+    opacity: 1;
 }
 
 #tray {
     opacity: 1;
-}
-
-#network {
-    margin-left: 0;
 }
 
 #custom-separator {
@@ -118,15 +122,19 @@ window#waybar {
 }
 
 tooltip {
-    padding: 4px;
-    background: @surface;
-    font-size: 10px;
-    border: 1.5px solid alpha(@on_surface, 0.6);
-    border-radius: 8px;
+    padding: 8px 10px;
+    background-color: @surface_container_high;
+    color: @on_surface;
+    font-size: 11px;
+    border: 1px solid alpha(@outline_variant, 0.72);
+    border-bottom: 1.5px solid alpha(@primary, 0.55);
+    border-radius: 2px;
+    box-shadow: 0 1px 2px alpha(@shadow, 0.8);
 }
 
 tooltip label {
-    color: alpha(@on_surface, 0.65);
+    color: @on_surface;
+    font-family: "JetBrains Mono Nerd Font";
     font-weight: normal;
 }
 
