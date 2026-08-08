@@ -112,6 +112,13 @@ for name in fish vicinae ghostty hypr hyprland-preview-share-picker mako matugen
   copy "$SCRIPT_DIR/$name" "$CONFIG_DIR/$name"
 done
 
+PICKER_DIR="$CONFIG_DIR/hyprland-preview-share-picker"
+PICKER_STYLE="$PICKER_DIR/style.css"
+if [[ -f "$PICKER_STYLE" ]]; then
+  sed -i "1c @import url(\"file://${PICKER_DIR}/colors.css\");" "$PICKER_STYLE"
+  log "Configured hyprland-preview-share-picker colors path: $PICKER_DIR/colors.css"
+fi
+
 if [[ -f "$SCRIPT_DIR/.luarc.json" ]]; then
   if [[ -e "$CONFIG_DIR/.luarc.json" ]] && ! cmp -s "$SCRIPT_DIR/.luarc.json" "$CONFIG_DIR/.luarc.json"; then
     mkdir -p "$BACKUP_DIR"
