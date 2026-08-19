@@ -98,7 +98,7 @@ hl.config({
     },
 
     cursor = {
-        no_hardware_cursors = 2,
+        no_hardware_cursors = 1,
         inactive_timeout    = 0,
         hide_on_key_press   = true,
     },
@@ -341,6 +341,16 @@ hl.window_rule({
     stay_focused    = true,
     dim_around      = true,
     no_screen_share = true,
+})
+
+hl.window_rule({
+    match        = { class = "^org\\.gnome\\.NautilusPreviewer$" },
+    float        = true,
+    center       = true,
+    pin          = true,
+    stay_focused = true,
+    dim_around   = true,
+    size         = { 1200, 750 },
 })
 
 hl.window_rule({
