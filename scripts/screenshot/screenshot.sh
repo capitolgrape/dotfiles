@@ -4,7 +4,7 @@ set -euo pipefail
 
 mode="${1:-full}"
 screenshot_dir="${XDG_SCREENSHOTS_DIR:-$HOME/Pictures/Screenshots}"
-file="$screenshot_dir/$(date +%Y-%m-%d_%H-%M-%S).png"
+file="$screenshot_dir/$(date +%Y-%m-%d_%H-%M-%S-%N).png"
 
 mkdir -p "$screenshot_dir"
 
@@ -45,7 +45,10 @@ if command -v wl-copy >/dev/null 2>&1 && wl-copy --type image/png < "$file"; the
 fi
 
 if command -v notify-send >/dev/null 2>&1; then
-    if "$copied"; then
+    if [[ "$copied" == true ]]; then
+        notify-send -a Hyprland -i "$file" -h "string:image-path:$file" \
+            "Screenshot saved and copied" "$name"
+    else
         notify-send -a Hyprland -i "$file" -h "string:image-path:$file" \
             "Screenshot saved" "$name"
     fi

@@ -3,7 +3,7 @@
 [templates.hyprland]
 input_path = '~/.config/matugen/templates/hyprland-colors.lua'
 output_path = '~/.config/hypr/colors.lua'
-post_hook = 'hyprctl reload'
+post_hook = 'hyprctl reload || true'
 
 [templates.hyprlock]
 input_path = '~/.config/matugen/templates/hyprland-colors.conf'
@@ -12,7 +12,7 @@ output_path = '~/.config/hypr/colors.conf'
 [templates.waybar]
 input_path = '~/.config/matugen/templates/colors.css'
 output_path = '~/.config/waybar/colors.css'
-post_hook = 'systemctl --user restart waybar.service'
+post_hook = 'pkill -USR2 -x waybar || true'
 
 [templates.zed]
 input_path = '~/.config/matugen/templates/zed-colors.json'
@@ -30,7 +30,7 @@ post_hook = 'pkill -SIGUSR2 ghostty || true'
 [templates.gtk3]
 input_path = '~/.config/matugen/templates/gtk-colors.css'
 output_path = '~/.config/gtk-3.0/colors.css'
-post_hook = 'gsettings set org.gnome.desktop.interface gtk-theme ""; gsettings set org.gnome.desktop.interface gtk-theme adw-gtk3-{{mode}}'
+post_hook = 'gsettings set org.gnome.desktop.interface gtk-theme "" || true; gsettings set org.gnome.desktop.interface gtk-theme adw-gtk3-{{mode}} || true'
 
 [templates.gtk4]
 input_path = '~/.config/matugen/templates/gtk-colors.css'
@@ -60,9 +60,9 @@ output_path = '~/.config/hyprland-preview-share-picker/colors.css'
 [templates.mako-colors]
 input_path = '~/.config/matugen/templates/mako-colors'
 output_path = '~/.config/mako/mako-colors'
-post_hook = 'systemctl --user restart mako.service'
+post_hook = 'makoctl reload || true'
 
 [templates.vicinae]
 input_path = './templates/vicinae.toml'
 output_path = '~/.local/share/vicinae/themes/matugen.toml'
-post_hook = 'vicinae theme set matugen'
+post_hook = 'vicinae theme set matugen || true'

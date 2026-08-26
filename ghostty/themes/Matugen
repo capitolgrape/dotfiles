@@ -1,0 +1,23 @@
+# Baseline theme; Matugen overwrites this file after a wallpaper change.
+background = 1a1b20
+foreground = e6e1e9
+cursor-color = 33ccff
+cursor-text = 002b3d
+selection-background = 004d66
+selection-foreground = b8eaff
+palette = 0=25252b
+palette = 1=ffb4ab
+palette = 2=33ccff
+palette = 3=9fd7c5
+palette = 4=33ccff
+palette = 5=8ec5ff
+palette = 6=8ee7d0
+palette = 7=c9c5d0
+palette = 8=92909a
+palette = 9=ffdad6
+palette = 10=b8eaff
+palette = 11=c0e9dc
+palette = 12=004d66
+palette = 13=8ec5ff
+palette = 14=44474e
+palette = 15=e6e1e9

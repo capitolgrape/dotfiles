@@ -4,6 +4,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}"
+
 TIMESTAMP="$(date +%Y%m%d-%H%M%S)"
 BACKUP_DIR="$CONFIG_DIR/dotfiles-backup/$TIMESTAMP"
 
@@ -16,6 +17,7 @@ warn() { WARNINGS+=("$*"); printf '\033[33m!!  %s\033[0m\n' "$*"; }
 
 trap 'warn "Unexpected error at line $LINENO (exit code $?)"' ERR
 
+SUDO_KEEPALIVE_PID=""
 sudo -v
 (
   set +e
@@ -49,6 +51,25 @@ copy() {
   log "Copied $src -> $dest"
 }
 
+install_user_file() {
+  local src="$1" dest="$2"
+  [[ -f "$src" ]] || { warn "Missing, skipping: $src"; return; }
+
+  mkdir -p "$(dirname "$dest")"
+  if [[ -e "$dest" ]]; then
+    if [[ -f "$dest" ]] && cmp -s "$src" "$dest"; then
+      log "$dest already up to date, skipping"
+      return
+    fi
+    mkdir -p "$BACKUP_DIR"
+    mv "$dest" "$BACKUP_DIR/$(basename "$dest")"
+    warn "Backed up existing $dest -> $BACKUP_DIR/$(basename "$dest")"
+  fi
+
+  install -m 0644 "$src" "$dest"
+  log "Installed $src -> $dest"
+}
+
 if ! command -v paru &> /dev/null; then
   log "paru not found, building it from the AUR..."
   sudo pacman -S --needed --noconfirm base-devel git || warn "Failed to install base-devel/git"
@@ -65,19 +86,8 @@ if ! command -v paru &> /dev/null; then
   fi
 fi
 
-if [[ -f "$SCRIPT_DIR/makepkg.conf" ]]; then
-  mkdir -p "$CONFIG_DIR/pacman"
-  if [[ -e "$CONFIG_DIR/pacman/makepkg.conf" ]] && ! cmp -s "$SCRIPT_DIR/makepkg.conf" "$CONFIG_DIR/pacman/makepkg.conf"; then
-    mkdir -p "$BACKUP_DIR"
-    mv "$CONFIG_DIR/pacman/makepkg.conf" "$BACKUP_DIR/makepkg.conf"
-    warn "Backed up existing $CONFIG_DIR/pacman/makepkg.conf -> $BACKUP_DIR/makepkg.conf"
-  fi
-  cp "$SCRIPT_DIR/makepkg.conf" "$CONFIG_DIR/pacman/makepkg.conf"
-  log "Copied makepkg.conf"
-fi
-
 if command -v paru &> /dev/null; then
-  log "Syncing repos and upgrading system (avoids partial-upgrade conflicts)..."
+  log "Syncing repos and upgrading system..."
   paru -Syu --noconfirm --skipreview --noupgrademenu --nopgpfetch --useask < /dev/null || warn "System upgrade failed, continuing anyway..."
 
   if [[ -f "$SCRIPT_DIR/packages.ini" ]]; then
@@ -108,9 +118,33 @@ else
   warn "paru not found, skipping package install"
 fi
 
+REQUIRED_COMMANDS=(
+  awww matugen grim slurp brightnessctl jq wl-copy notify-send
+  vicinae makoctl pw-dump hyprctl
+)
+for command_name in "${REQUIRED_COMMANDS[@]}"; do
+  command -v "$command_name" &> /dev/null || warn "Required command not found: $command_name"
+done
+
+if [[ -f "$SCRIPT_DIR/makepkg.conf" ]]; then
+  mkdir -p "$CONFIG_DIR/pacman"
+  if [[ -e "$CONFIG_DIR/pacman/makepkg.conf" ]] && ! cmp -s "$SCRIPT_DIR/makepkg.conf" "$CONFIG_DIR/pacman/makepkg.conf"; then
+    mkdir -p "$BACKUP_DIR"
+    mv "$CONFIG_DIR/pacman/makepkg.conf" "$BACKUP_DIR/makepkg.conf"
+    warn "Backed up existing $CONFIG_DIR/pacman/makepkg.conf -> $BACKUP_DIR/makepkg.conf"
+  fi
+  cp "$SCRIPT_DIR/makepkg.conf" "$CONFIG_DIR/pacman/makepkg.conf"
+  log "Copied makepkg.conf"
+fi
+
 for name in fish vicinae ghostty hypr hyprland-preview-share-picker mako matugen uwsm waybar paru scripts zed mpv fastfetch; do
   copy "$SCRIPT_DIR/$name" "$CONFIG_DIR/$name"
 done
+
+install_user_file "$SCRIPT_DIR/systemd/user/mako.service" "$CONFIG_DIR/systemd/user/mako.service"
+if [[ -f "$CONFIG_DIR/systemd/user/mako.service" ]] && command -v systemctl &> /dev/null; then
+  systemctl --user daemon-reload || warn "Failed to reload the user systemd manager"
+fi
 
 PICKER_DIR="$CONFIG_DIR/hyprland-preview-share-picker"
 PICKER_STYLE="$PICKER_DIR/style.css"
@@ -193,20 +227,24 @@ if command -v fish &> /dev/null && [ "$SHELL" != "$(command -v fish)" ]; then
   fi
 fi
 
-if [ ! -d "$CONFIG_DIR/nvim" ]; then
-  if git clone https://github.com/nvim-lua/kickstart.nvim "$CONFIG_DIR/nvim"; then
-    log "Cloned kickstart.nvim"
+if command -v git &> /dev/null; then
+  if [ ! -d "$CONFIG_DIR/nvim" ]; then
+    if git clone https://github.com/nvim-lua/kickstart.nvim "$CONFIG_DIR/nvim"; then
+      log "Cloned kickstart.nvim"
+    else
+      warn "Failed to clone kickstart.nvim"
+    fi
+  elif [ -d "$CONFIG_DIR/nvim/.git" ]; then
+    if git -C "$CONFIG_DIR/nvim" pull --ff-only &> /dev/null; then
+      log "Updated kickstart.nvim"
+    else
+      warn "Failed to update kickstart.nvim (local changes or diverged history?), leaving as-is"
+    fi
   else
-    warn "Failed to clone kickstart.nvim"
-  fi
-elif [ -d "$CONFIG_DIR/nvim/.git" ]; then
-  if git -C "$CONFIG_DIR/nvim" pull --ff-only &> /dev/null; then
-    log "Updated kickstart.nvim"
-  else
-    warn "Failed to update kickstart.nvim (local changes or diverged history?), leaving as-is"
+    warn "$CONFIG_DIR/nvim exists but isn't a git repo, skipping kickstart.nvim update"
   fi
 else
-  warn "$CONFIG_DIR/nvim exists but isn't a git repo, skipping kickstart.nvim update"
+  warn "git not found, skipping kickstart.nvim setup"
 fi
 
 if command -v gsettings &> /dev/null; then
@@ -353,7 +391,7 @@ for svc in fstrim.timer paccache.timer bluetooth.service ananicy-cpp.service rtk
   fi
 done
 
-for svc in waybar.service vicinae.service hypridle.service; do
+for svc in waybar.service vicinae.service hypridle.service mako.service; do
   if systemctl --user list-unit-files --no-legend "$svc" 2>/dev/null | grep -q "^$svc"; then
     if systemctl --user enable --now "$svc"; then
       log "Enabled --user $svc"

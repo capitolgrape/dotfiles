@@ -17,7 +17,14 @@ if not ok then
     }
 end
 
-local screenshot = config_home .. "/scripts/screenshot/screenshot.sh"
+local screenshot_dir = os.getenv("XDG_SCREENSHOTS_DIR") or (os.getenv("HOME") .. "/Pictures/Screenshots")
+
+local function shell_quote(value)
+    return "'" .. value:gsub("'", "'\\''") .. "'"
+end
+
+local screenshot = "hyprshot -o " .. shell_quote(screenshot_dir)
+    .. " -f \"$(date +%Y-%m-%d_%H-%M-%S-%N)_hyprshot.png\""
 
 local function uwsm(command)
     return function()
@@ -206,9 +213,9 @@ hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = tr
 hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
 hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true })
 
-hl.bind("PRINT", hl.dsp.exec_cmd(screenshot .. " area"))
-hl.bind(mainMod .. " + PRINT", hl.dsp.exec_cmd(screenshot .. " full"))
-hl.bind(mainMod .. " + SHIFT + PRINT", hl.dsp.exec_cmd(screenshot .. " active"))
+hl.bind("PRINT", hl.dsp.exec_cmd(screenshot .. " -m region"))
+hl.bind(mainMod .. " + PRINT", hl.dsp.exec_cmd(screenshot .. " -m output -m active"))
+hl.bind(mainMod .. " + SHIFT + PRINT", hl.dsp.exec_cmd(screenshot .. " -m window -m active"))
 
 hl.layer_rule({
     match        = { namespace = "vicinae" },
@@ -245,8 +252,7 @@ hl.window_rule({
 
 hl.window_rule({
     match             = {
-        class = "^firefox$",
-        title = "^Picture-in-Picture$",
+        title = "^(?i)picture[- ]?in[- ]?picture$",
     },
 
     float             = true,
@@ -259,8 +265,7 @@ hl.window_rule({
 
 hl.window_rule({
     match             = {
-        initial_class = "^$",
-        initial_title = "^Picture in picture$",
+        initial_title = "^(?i)picture[- ]?in[- ]?picture$",
     },
 
     float             = true,
@@ -269,6 +274,34 @@ hl.window_rule({
     move              = { "monitor_w-480-24", "monitor_h-270-24" },
     keep_aspect_ratio = true,
     no_initial_focus  = true,
+})
+
+hl.window_rule({
+    match            = {
+        class = "^cider$",
+        title = "^Cider - Mini Player$",
+    },
+
+    float            = true,
+    pin              = true,
+    no_max_size      = true,
+    size             = { 480, 480 },
+    move             = { 1538, 590 },
+    no_initial_focus = true,
+})
+
+hl.window_rule({
+    match            = {
+        class         = "^cider$",
+        initial_title = "^Cider - Mini Player$",
+    },
+
+    float            = true,
+    pin              = true,
+    no_max_size      = true,
+    size             = { 480, 480 },
+    move             = { 1538, 590 },
+    no_initial_focus = true,
 })
 
 hl.window_rule({

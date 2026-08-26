@@ -1,0 +1,11 @@
+/* Baseline palette; Matugen overwrites this file after a wallpaper change. */
+@define-color background #1a1b20;
+@define-color foreground #e6e1e9;
+@define-color primary #33ccff;
+@define-color on_primary #002b3d;
+@define-color primary_container #004d66;
+@define-color on_primary_container #b8eaff;
+@define-color surface_low #121318;
+@define-color surface_high #2b2d33;
+@define-color outline_variant #44474e;
+@define-color shadow #000000;

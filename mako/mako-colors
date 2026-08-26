@@ -1,0 +1,20 @@
+# Baseline colors; Matugen overwrites this file after a wallpaper change.
+background-color=1a1b20f2
+text-color=e6e1e9
+border-color=33ccff8c
+progress-color=33ccff
+
+[urgency=low]
+border-color=44474e8c
+
+[mode=do-not-disturb]
+invisible=1
+on-notify=none
+
+[mode=silent]
+on-notify=none
+
+[urgency=high]
+background-color=2b2d33f5
+border-color=ffb4ab
+progress-color=ffb4ab
